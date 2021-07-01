@@ -2,3 +2,4 @@
 .DS_Store
 sbolenv
 .vscode
+sbol2excel.egg-info
