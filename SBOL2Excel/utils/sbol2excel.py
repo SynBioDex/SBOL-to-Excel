@@ -154,7 +154,7 @@ class seqFile:
         # set list to dictionary
         finalSetDictionary = df[finalSetList].to_dict()
         # create dataframe
-        dframe = pd.DataFrame.from_dict(finalSetDictionary, orient = "index")
+        dframe = pd.DataFrame.from_dict(finalSetDictionary, orient="index")
         # return the dataframe, and tranpose the rows and columns
         return dframe.T
 
@@ -163,7 +163,8 @@ class seqFile:
     #     return pd.DataFrame.from_dict(self.readDocChart(), orient="index")
 
     def columnString(self, n):
-        # loop through column length in order to get string appropriate values for excel sheet rows and columns
+        # loop through column length in order to get string appropriate
+        # values for excel sheet rows and columns
         string = ""
         while n > 0:
             n, remainder = divmod(n - 1, 26)
