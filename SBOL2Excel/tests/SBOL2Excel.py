@@ -4,6 +4,7 @@
 #add library sheets
 #add postprocessing function to remove unecessaries
 
+import os
 import sbol2
 import pandas as pd 
 from openpyxl import Workbook, load_workbook
@@ -14,32 +15,42 @@ from requests_html import HTMLSession
 
 class seqFile:
     
-#     def __init__(self, homeSpace, document, sheet):
-    def __init__(self):
-        #global varibales for homespace and document 
+    def __init__(self, document):
+        #global varibales for homespace, document, and sheet
         self.homeSpace = 'http://sys-bio.org'
-        self.document = 'pichia_toolkit_KWK_v002.xml'
+        self.document = document
         self.sheet = 'ontologies.xlsx'
         
-    def roleVars(self):
-        df = pd.read_excel('../resources/templates/' + self.sheet, index_col = 0, sheet_name = 1,usecols = [1,2])
-        role_convert_dict = df.to_dict()
-        role_name = role_convert_dict['URI']
-        final = {uri:role for role, uri in role_name.items()}
-        return final
+    def roleVariables(self):
+        #set Excel file into a dataframe
+        file_dir = os.path.dirname(__file__)
+        test_files_path = os.path.join(file_dir, 'test_files', self.sheet)
+        print(test_files_path)
+        df = pd.read_excel(test_files_path, index_col = 0, sheet_name = 1,usecols = [1,2])
+        #convert the dataframe into a dictionary
+        roleConvertDict = df.to_dict()
+        #set dictionary indices and values
+        roleName = roleConvertDict['URI']
+        #switch indices' and values' postions
+        roleDictionary = {uri:role for role, uri in roleName.items()}
+        return roleDictionary
     
-    def orgVars(self):
-        df = pd.read_excel('../resources/templates/' + self.sheet, index_col = 0, sheet_name = 2,usecols = [0,1])
-        organism_convert_dict = df.to_dict()
-        organism_name = organism_convert_dict['txid']
-        final = {str(txid):organism for organism, txid in organism_name.items()}
-        return final
+    def orgVariables(self):
+        #set Excel file into a dataframe
+        df = pd.read_excel('../tests/test_files/' + self.sheet, index_col = 0, sheet_name = 2,usecols = [0,1])
+        #convert the dataframe into a dictionary
+        organismConvertDict = df.to_dict()
+        #set dictionary indices and values
+        organismName = organismConvertDict['txid']
+        #switch indices' and values' postions
+        organismDictionary = {str(txid):organism for organism, txid in organismName.items()}
+        return organismDictionary
         
     def inspectDocInfo(self):
         #declare homespace 
         sbol2.setHomespace(self.homeSpace)
         doc = sbol2.Document()
-        doc.read('../resources/templates/' + self.document)
+        doc.read('../tests/test_files/' + self.document)
 #         doc.read(self.document)
         #print document information 
         print(doc) 
@@ -48,7 +59,7 @@ class seqFile:
         #declare homespace 
         sbol2.setHomespace(self.homeSpace)
         doc = sbol2.Document()
-        doc.read('../resources/templates/' + self.document)
+        doc.read('../tests/test_files/' + self.document)
 #         doc.read(self.document)
         #print document contents
         for obj in doc:
@@ -58,13 +69,13 @@ class seqFile:
         #declare homespace 
         sbol2.setHomespace(self.homeSpace)
         doc = sbol2.Document()
-        doc.read('../resources/templates/' + self.document)
+        doc.read('../tests/test_files/' + self.document)
 #         doc.read(self.document)
         #create a dictionary to hold all the component defintions' information 
         componentDefinitions = {}
         #iterate through the component definitions 
-        roleDict = self.roleVars()
-        orgDict = self.orgVars()
+        roleDict = self.roleVariables()
+        orgDict = self.orgVariables()
         for cd in doc.componentDefinitions:
             cdType = cd.type
             #create a dictionary that has a key for the component definition's identity, 
@@ -101,7 +112,8 @@ class seqFile:
         return componentDefinitions
 
     def TEMP_readDocChart1(self):
-        arr2 = ['Part Name', 
+        #demo of table column names
+        columnNames = ['Part Name', 
                 'Role', 
                 'Design Notes',
                'Altered Sequence',
@@ -115,25 +127,32 @@ class seqFile:
                'Sequence',
                'Data Source',
                'Composite']
-        exc = self.readDocChart()
-        df = pd.DataFrame.from_dict(exc, orient = "index")
-        inputList = set(df)
-        print(inputList)
-        columnOrder = set(arr2)
-        print(columnOrder)
-        differ = inputList.difference(columnOrder)
-        intersection = inputList.intersection(columnOrder)
-        final = list(intersection) + list(differ)
-        print(final)
-        x = df[final].to_dict()
-        dframe = pd.DataFrame.from_dict(x, orient = "index")
+        #import dataframe dictionary
+        #convert dictionary to dataframe
+        df = pd.DataFrame.from_dict(self.readDocChart(), orient = "index")
+        #type caste dataframe to a set
+        dfSet = set(df)
+        #type caste column names to a set
+        columnNameOrder = set(columnNames)
+        #check difference between the datframe set and the column name order
+        dfSetDifference = dfSet.difference(columnNameOrder)
+        #check intersection between the datframe set and the column name order
+        dfSetIntersection = dfSet.intersection(columnNameOrder)
+        #combine the type casted difference and intersection
+        finalSetList = list(dfSetIntersection) + list(dfSetDifference)
+        #set list to dictionary
+        finalSetDictionary = df[finalSetList].to_dict()
+        #create dataframe
+        dframe = pd.DataFrame.from_dict(finalSetDictionary, orient = "index")
+        #return the dataframe, and tranpose the rows and columns
         return dframe.T
     
-    def displayDocChart(self):
-        disp = self.readDocChart()
-        return pd.DataFrame.from_dict(disp, orient = "index")
+#     def displayDocChart(self):
+#         #displat the dataframe
+#         return pd.DataFrame.from_dict(self.readDocChart(), orient = "index")
     
-    def column_string(self, n):
+    def columnString(self, n):
+        #loop through column length in order to get string appropriate values for excel sheet rows and columns
         string = ""
         while n > 0:
             n, remainder = divmod(n - 1, 26)
@@ -141,29 +160,34 @@ class seqFile:
         return string
     
     def returnExcelChart(self):
-        wb = load_workbook('../resources/templates/Book4.xlsx')
+        #load a workbook
+        wb = load_workbook('../tests/test_files/Book4.xlsx')
         ws = wb.active
-        exc = self.readDocChart()
-        df = pd.DataFrame.from_dict(exc, orient = "index")
+        #load raw dataframe to df
+        df = pd.DataFrame.from_dict(self.readDocChart(), orient = "index")
+        #set font features
         ft1 = Font(name = 'Arial', size = 12, color = '548235')
         ft2 = Font(name = 'Calibri', size = 11, bold = True)
         hold = dataframe_to_rows(df, index=False, header=True)
         counter = 0
+        #loop through worksheet
         ws['A18'].value = ''
         for r in hold:
+        #if a specific cell is empty, continue to loop past it
             if r == [None]:
                 continue
             ws.append(r)
             counter += 1
-        tab = Table(displayName="Parts_Lib", ref=f"A19:{self.column_string(len(df.columns))}{(len(df) * 2) - 2}")
+        #set table features
+        tab = Table(displayName="Parts_Lib", ref=f"A19:{self.columnString(len(df.columns))}{(len(df) * 2) - 2}")
         style = TableStyleInfo(name="TableStyleLight7", showFirstColumn=False, 
                                showLastColumn=False, showRowStripes=True, showColumnStripes=False)
         cellColor = PatternFill(patternType ='solid', 
                                 fgColor = 'DDEBF7')
         cellBorder = Side(border_style='medium', color="000000")
-        
         x = df.columns
         cellIndex = len(x)
+        #gives cells within specified range their table attributes
         for n in range (65, 65 + len(x)):
             alpha = chr(n)
             ws[f'{alpha}19'].fill = cellColor  
@@ -171,36 +195,42 @@ class seqFile:
         tab.tableStyleInfo = style
         ws.add_table(tab)
         counter = 0
+        #gives cells within specified range their font attributes
         for n in range(len(df) - 1, (len(df) * 2 - 1)):
             counter = counter + 1
             for i in ws[n]:
                 i.font = ft1
+        #gives cells within specified range their font attributes (these are special features for the title)
         titleFormat = len(df)
         if titleFormat % 2 > 0:
             titleFormat = titleFormat - 1
         for j in range(19, titleFormat):
             for x in ws[j]:
                 x.font = ft2
+        #output the file
         wb.save('../outputs/sequenceparts.xlsx')
         wb.close()
     
 class columnMethods:
     
     def __init__(self, colN, colV, doc, cdType, roleDict, orgDict):
+        #global varibales for dataframe switch statements
         self.colN = colN
         self.colV = colV
         self.doc = doc
         self.cdType = cdType
         self.roleDict = roleDict
         self.orgDict = orgDict
+        #if the column name matches the function name, call the function 
         try:
             return getattr(self, self.colN)()
+        #if the column name does not match the function name, call 'no_change'
         except AttributeError:
             return getattr(self, 'no_change')()
         
     def no_change(self):
         pass
-    
+    #if the specified column role value is within the role column, 
     def role(self):   
         roleVal = str(self.colV)
         if roleVal in self.roleDict:
