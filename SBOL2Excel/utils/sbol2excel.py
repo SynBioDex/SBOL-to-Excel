@@ -45,13 +45,13 @@ class seqFile:
         return organismDictionary
 
     # def inspectDocInfo(self):
-    #     # declare homespace 
+    #     # declare homespace
     #     sbol2.setHomespace(self.homeSpace)
     #     doc = sbol2.Document()
     #     doc.read('../tests/test_files/' + self.document)
     #     # doc.read(self.document)
     #     # print document information
-    #     print(doc) 
+    #     print(doc)
 
     # def printDocContents(self):
     #     # declare homespace
@@ -76,7 +76,7 @@ class seqFile:
         for cd in doc.componentDefinitions:
             cdType = cd.type
             # create a dictionary that has a key for the
-            # component definition's identity, 
+            # component definition's identity,
             # and a value for all of its features
             componentFeatures = {}
             persistentIdentity = cd.properties['http://sbols.org/v2#persistentIdentity'][0]
@@ -124,20 +124,20 @@ class seqFile:
 
     def TEMP_readDocChart1(self):
         # demo of table column names
-        columnNames = ['Part Name',  
-                       'Role', 
+        columnNames = ['Part Name',
+                       'Role',
                        'Design Notes',
-                    'Altered Sequence',
-                    'Part Description',
-                    'Data Source Prefix',
-                    'Data Source',
-                    'Source Organism',
-                    'Target Organism',
-                    'Circular',
-                    'length (bp)',
-                    'Sequence',
-                    'Data Source',
-                    'Composite']
+                       'Altered Sequence',
+                       'Part Description',
+                       'Data Source Prefix',
+                       'Data Source',
+                       'Source Organism',
+                       'Target Organism',
+                       'Circular',
+                       'length (bp)',
+                       'Sequence',
+                       'Data Source',
+                       'Composite']
         # import dataframe dictionary
         # convert dictionary to dataframe
         df = self.readDocChart()
@@ -227,6 +227,7 @@ class seqFile:
         wb.close()
         logging.warning(f'Your converted file has been output at {self.output_path}')
 
+
 class columnMethods:
 
     def __init__(self, colN, colV, doc, cdType, roleDict, orgDict):
@@ -237,23 +238,24 @@ class columnMethods:
         self.cdType = cdType
         self.roleDict = roleDict
         self.orgDict = orgDict
-        # if the column name matches the function name, call the function 
+        # if the column name matches the function name, call the function
         try:
             return getattr(self, self.colN)()
         # if the column name does not match the function name, call 'no_change'
         except AttributeError:
             return getattr(self, 'no_change')()
-  
+
     def no_change(self):
         pass
-    # if the specified column role value is within the role column, 
-    def role(self):   
+    # if the specified column role value is within the role column
+
+    def role(self):
         roleVal = str(self.colV)
         if roleVal in self.roleDict:
             self.colV = self.roleDict[roleVal]
 
     def types(self):
-         self.colV = self.colV.split('#')[-1]
+        self.colV = self.colV.split('#')[-1]
 
     def sequence(self):
         self.colV = self.doc.getSequence(self.colV).elements
@@ -263,11 +265,11 @@ class columnMethods:
         orgVal = orgVal.split('=')[-1]
         txid = self.colV.split('=')[-1]
         if orgVal in self.orgDict:
-            self.colV = self.orgDict[orgVal] 
+            self.colV = self.orgDict[orgVal]
         else:
             session = HTMLSession()
             r = session.get(self.colV)
-            v = r.html.find('strong', first = True)
+            v = r.html.find('strong', first=True)
             self.colV = v.text
             self.orgDict[txid] = self.colV
 
@@ -280,6 +282,6 @@ class columnMethods:
         else:
             session = HTMLSession()
             r = session.get(self.colV)
-            v = r.html.find('strong', first = True)
+            v = r.html.find('strong', first=True)
             self.colV = v.text
             self.orgDict[txid] = self.colV
