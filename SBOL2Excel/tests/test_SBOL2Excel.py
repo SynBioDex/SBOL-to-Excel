@@ -12,7 +12,8 @@ test_files_path = os.path.join(file_dir, 'test_files')
         ("http://sbols.org/v2#type", False, 'types'),
         ("http://purl.org/dc/terms/title", False, 'title'),
         ("http://purl.obolibrary.org/obo/OBI_0001617", False, 'OBI_0001617'),
-        ("https://wiki.synbiohub.org/wiki/Terms/synbiohub#sourceOrganism", False, 'sourceOrganism'),
+        ("https://wiki.synbiohub.org/wiki/Terms/synbiohub#sourceOrganism",
+         False, 'sourceOrganism'),
         ("http://purl.org/dc/terms/description", False, 'description'),
         (76868, True, ValueError)
     ]
