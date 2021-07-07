@@ -20,8 +20,8 @@ jobs:
       - name: Install Pytest dependencies
         run: |
           python -m pip install pytest
-          python -m pip install -e sbol2excel
+          python -m pip install -e SBOL2Excel
       - name: Test with pytest
         run: |
-          cd ./sbol2excel
+          cd ./SBOL2Excel
           python -m pytest -vv -s
