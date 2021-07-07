@@ -202,7 +202,7 @@ class seqFile:
         cellBorder = Side(border_style='medium', color="000000")
         # cellIndex = len(x)
         # gives cells within specified range their table attributes
-        for col in range(1, len(df.columns)+1):
+        for col in range(1, len(df.columns) + 1):
             alpha = self.columnString(col)
             ws[f'{alpha}{start_row+1}'].fill = cellColor
             ws[f'{alpha}{start_row+1}'].border = Border(top=cellBorder)
