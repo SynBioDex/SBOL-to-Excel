@@ -1,1 +1,1 @@
-This library is a collection of functions used to convert an SBOL file into an Excel Template. It includes testing functions as well as a python package published on PyPi.
+This library is a collection of functions used to convert an SBOL file into an Excel Template. It includes testing functions as well as a python package published on PyPi
