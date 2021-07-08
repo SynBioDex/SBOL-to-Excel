@@ -46,6 +46,5 @@ setup(name='sbol2excel',
                         'tqdm==4.61.1',
                         'urllib3==1.26.5',
                         'w3lib==1.22.0',
-                        'websockets==9.1',
                         'wrapt==1.12.1'],
       zip_safe=False)
