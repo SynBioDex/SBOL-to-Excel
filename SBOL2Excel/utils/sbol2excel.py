@@ -50,24 +50,11 @@ class seqFile:
         organismDictionary = {str(txid): organism for organism, txid in organismName.items()}
         return organismDictionary
 
-    # def inspectDocInfo(self):
-    #     # declare homespace
-    #     sbol2.setHomespace(self.homeSpace)
-    #     doc = sbol2.Document()
-    #     doc.read('../tests/test_files/' + self.document)
-    #     # doc.read(self.document)
-    #     # print document information
-    #     print(doc)
-
-    # def printDocContents(self):
-    #     # declare homespace
-    #     sbol2.setHomespace(self.homeSpace)
-    #     doc = sbol2.Document()
-    #     doc.read('../tests/test_files/' + self.document)
-    #     # doc.read(self.document)
-    #     # print document contents
-    #     for obj in doc:
-    #         print(obj)
+    def overarching(self):
+        df = self.readDocChart()
+        df = self.reorder_columns(df)
+        self.returnExcelChart(df)
+        return
 
     def readDocChart(self):
         # declare homespace
@@ -133,36 +120,66 @@ class seqFile:
         #display the dataframe
         return pd.DataFrame.from_dict(self.readDocChart(), orient = "index")
 
-    def TEMP_readDocChart1(self):
-        #demo of table column names
-        columnNames = ['Part Name', 
-                'Role', 
-                'Design Notes',
-               'Altered Sequence',
-               'Part Description',
-               'Data Source Prefix',
-               'Data Source',
-               'Source Organism',
-               'Target Organism',
-               'Circular',
-               'length (bp)',
-               'Sequence',
-               'Data Source',
-               'Composite']
-        #import dataframe dictionary
-        #convert dictionary to dataframe
-        df = self.displayDocChart()
-        #type caste dataframe to a set
+    # def TEMP_readDocChart1(self):
+    #     # demo of table column names
+    #     columnNames = ['Part Name',
+    #                    'Role',
+    #                    'Design Notes',
+    #                    'Altered Sequence',
+    #                    'Part Description',
+    #                    'Data Source Prefix',
+    #                    'Data Source',
+    #                    'Source Organism',
+    #                    'Target Organism',
+    #                    'Circular',
+    #                    'length (bp)',
+    #                    'Sequence',
+    #                    'Data Source',
+    #                    'Composite']
+    #     # import dataframe dictionary
+    #     # convert dictionary to dataframe
+    #     df = self.displayDocChart()
+    #     # type caste dataframe to a set
+    #     dfSet = set(df)
+    #     # type caste column names to a set
+    #     columnNameOrder = set(columnNames)
+    #     # check difference between the dataframe set and the column name order
+    #     dfSetDifference = dfSet.difference(columnNameOrder)
+    #     # check intersection between the datframe set and the column name order
+    #     dfSetIntersection = dfSet.intersection(columnNameOrder)
+    #     # combine the type casted difference and intersection
+    #     finalSetList = list(dfSetIntersection) + list(dfSetDifference)
+    #     # set list to dictionary
+    #     return finalSetList
+
+    def reorder_columns(self, df):
+        # demo of table column names
+        # columnNames = col_list
+        columnNames = ['Part Name',
+                       'Role',
+                       'Design Notes',
+                       'Altered Sequence',
+                       'Part Description',
+                       'Data Source Prefix',
+                       'Data Source',
+                       'Source Organism',
+                       'Target Organism',
+                       'Circular',
+                       'length (bp)',
+                       'Sequence',
+                       'Data Source',
+                       'Composite']
+        # type caste dataframe to a set
         dfSet = set(df)
-        #type caste column names to a set
+        # type caste column names to a set
         columnNameOrder = set(columnNames)
-        #check difference between the dataframe set and the column name order
+        # check difference between the dataframe set and the column name order
         dfSetDifference = dfSet.difference(columnNameOrder)
-        #check intersection between the datframe set and the column name order
+        # check intersection between the datframe set and the column name order
         dfSetIntersection = dfSet.intersection(columnNameOrder)
-        #combine the type casted difference and intersection
+        # combine the type casted difference and intersection
         finalSetList = list(dfSetIntersection) + list(dfSetDifference)
-        #set list to dictionary
+        # set list to dictionary
         return finalSetList
 
     # def displayDocChart(self):
@@ -178,14 +195,14 @@ class seqFile:
             string = chr(65 + remainder) + string
         return string
 
-    def returnExcelChart(self):
+    def returnExcelChart(self, df):
         start_row = 18
         start_cell = f'A{start_row}'
         # load a workbook
         wb = load_workbook(self.output_template)
         ws = wb.active
         # load raw dataframe to df
-        df = self.readDocChart()
+        # df = self.readDocChart()
         # set font features
         ft1 = Font(name='Arial', size=12, color='548235')
         ft2 = Font(name='Calibri', size=11, bold=True)
@@ -292,5 +309,4 @@ class columnMethods:
             v = r.html.find('strong', first=True)
             self.colV = v.text
             self.orgDict[txid] = self.colV
-
 
