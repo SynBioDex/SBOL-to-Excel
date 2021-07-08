@@ -26,6 +26,19 @@ def test_seqFile_prop_convert(prop, raising_err, expected):
     else:
         assert seq_file_obj.prop_convert(prop) == expected
 
+@pytest.mark.parametrize(
+    'prop, raising_err, expected', [
+        ([], False, )
+    ]
+)
+def test_seqFile_prop_convert(prop, raising_err, expected):
+    seq_file_obj = s_e.seqFile('file_path_in', 'output_path')
+    if raising_err:
+        with pytest.raises(expected):
+            seq_file_obj.prop_convert(prop)
+    else:
+        assert seq_file_obj.prop_convert(prop) == expected
+
 # class seqFile:
 #     def __init__(self, document):
 #         # global varibales for homespace, document, and sheet

@@ -8,6 +8,12 @@ from openpyxl.utils.dataframe import dataframe_to_rows
 from openpyxl.styles import Font, PatternFill, Border, Side
 from requests_html import HTMLSession
 
+#wasderivedfrom: source
+#remove identity, persistenID, displayID, version
+#remove attachment (if empty)
+#add library sheets
+#add postprocessing function to remove unecessaries
+
 
 class seqFile:
 
@@ -100,6 +106,7 @@ class seqFile:
             componentDefinitions[persistentIdentity] = componentFeatures
         # return the dictionary of information (temporary, maybe
         # return true if read in correctly)
+        
         doc_chart = pd.DataFrame.from_dict(componentDefinitions, orient="index")
         return doc_chart
 
@@ -121,42 +128,42 @@ class seqFile:
             return (prop)
         else:
             raise ValueError()
+    
+    def displayDocChart(self):
+        #display the dataframe
+        return pd.DataFrame.from_dict(self.readDocChart(), orient = "index")
 
     def TEMP_readDocChart1(self):
-        # demo of table column names
-        columnNames = ['Part Name',
-                       'Role',
-                       'Design Notes',
-                       'Altered Sequence',
-                       'Part Description',
-                       'Data Source Prefix',
-                       'Data Source',
-                       'Source Organism',
-                       'Target Organism',
-                       'Circular',
-                       'length (bp)',
-                       'Sequence',
-                       'Data Source',
-                       'Composite']
-        # import dataframe dictionary
-        # convert dictionary to dataframe
-        df = self.readDocChart()
-        # type caste dataframe to a set
+        #demo of table column names
+        columnNames = ['Part Name', 
+                'Role', 
+                'Design Notes',
+               'Altered Sequence',
+               'Part Description',
+               'Data Source Prefix',
+               'Data Source',
+               'Source Organism',
+               'Target Organism',
+               'Circular',
+               'length (bp)',
+               'Sequence',
+               'Data Source',
+               'Composite']
+        #import dataframe dictionary
+        #convert dictionary to dataframe
+        df = self.displayDocChart()
+        #type caste dataframe to a set
         dfSet = set(df)
-        # type caste column names to a set
+        #type caste column names to a set
         columnNameOrder = set(columnNames)
-        # check difference between the datframe set and the column name order
+        #check difference between the dataframe set and the column name order
         dfSetDifference = dfSet.difference(columnNameOrder)
-        # check intersection between the datframe set and the column name order
+        #check intersection between the datframe set and the column name order
         dfSetIntersection = dfSet.intersection(columnNameOrder)
-        # combine the type casted difference and intersection
+        #combine the type casted difference and intersection
         finalSetList = list(dfSetIntersection) + list(dfSetDifference)
-        # set list to dictionary
-        finalSetDictionary = df[finalSetList].to_dict()
-        # create dataframe
-        dframe = pd.DataFrame.from_dict(finalSetDictionary, orient="index")
-        # return the dataframe, and tranpose the rows and columns
-        return dframe.T
+        #set list to dictionary
+        return finalSetList
 
     # def displayDocChart(self):
     #     # display the dataframe
@@ -285,3 +292,5 @@ class columnMethods:
             v = r.html.find('strong', first=True)
             self.colV = v.text
             self.orgDict[txid] = self.colV
+
+
