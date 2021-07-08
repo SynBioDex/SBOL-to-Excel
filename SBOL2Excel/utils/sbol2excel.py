@@ -109,7 +109,7 @@ class seqFile:
             # if parsing conditions meet, append them into the
             # componentFeatures dictionary as necessary
             if idx >= 1:
-                prop = prop[idx+1:]
+                prop = prop[idx + 1:]
             if prop == 'type':
                 prop = 'types'
             if prop == 'http://purl.org/dc/terms/title':
