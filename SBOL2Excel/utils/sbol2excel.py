@@ -35,7 +35,7 @@ class seqFile:
     def orgVariables(self):
         # set Excel file into a dataframe
         df = pd.read_excel(self.sheet, index_col=0,
-                           sheet_name=2, usecols=[0, 1])
+                           sheet_name=2, usecols=[0,1])
         # convert the dataframe into a dictionary
         organismConvertDict = df.to_dict()
         # set dictionary indices and values (use column 'txid' in excel sheet)
