@@ -1,4 +1,4 @@
-name: Linting
+name: SBOL to Excel Linting
 
 on:
   pull_request:
