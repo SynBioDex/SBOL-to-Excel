@@ -26,18 +26,22 @@ def test_seqFile_prop_convert(prop, raising_err, expected):
     else:
         assert seq_file_obj.prop_convert(prop) == expected
 
-@pytest.mark.parametrize(
-    'prop, raising_err, expected', [
-        ([], False, )
-    ]
-)
-def test_seqFile_prop_convert(prop, raising_err, expected):
-    seq_file_obj = s_e.seqFile('file_path_in', 'output_path')
-    if raising_err:
-        with pytest.raises(expected):
-            seq_file_obj.prop_convert(prop)
-    else:
-        assert seq_file_obj.prop_convert(prop) == expected
+# def test_reorder_columns(col_list, df_creator):
+#     df = df_creator(col_list)
+#     assert df == 7
+
+# @pytest.mark.parametrize(
+#     'prop, raising_err, expected', [
+#         ([], False, )
+#     ]
+# )
+# def test_seqFile_prop_convert(prop, raising_err, expected):
+#     seq_file_obj = s_e.seqFile('file_path_in', 'output_path')
+#     if raising_err:
+#         with pytest.raises(expected):
+#             seq_file_obj.prop_convert(prop)
+#     else:
+#         assert seq_file_obj.prop_convert(prop) == expected
 
 # class seqFile:
 #     def __init__(self, document):
