@@ -16,9 +16,9 @@
 # sb_obj.overarching()
 # # print(sb_obj.reorder_columns(df))
 
-import helper_functions as hf
-import pandas as pd
-from requests_html import HTMLSession
+import ontology_methods as om
+# import pandas as pd
+# from requests_html import HTMLSession
 
 
 # d = {'col1': [1, 2], 'col2': [3, 4], 'Role': [5, 6], 'Design Notes': [7, 8]}
@@ -28,6 +28,5 @@ from requests_html import HTMLSession
 
 # print(type(col_list))
 
-
-session = HTMLSession()
-r = session.get(self.prop_val)
+with open('test.txt', 'w') as f:
+    f.write(str(om.role_ontology('ontologies_v001.xlsx')))

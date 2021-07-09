@@ -8,10 +8,14 @@ def col_to_num(col_ind):
     Args:
         col_ind (integer): Column index to use
 
+    Raises:
+        TypeError: if col_ind is boolean, or a string that cannot
+                    be converted to an integer
+        ValueError: if col_ind is a float but not an integer
+
     Returns:
         col_name (string): The excel column name (uppercase)
     """
-
     if type(col_ind) is bool:
         # if boolean raise typerror
         raise TypeError
@@ -50,6 +54,9 @@ def reorder_col(df, col_list):
         col_list (list): A list of column names which may or may not
                         overlap with the column names in df. The df
                         column order will be rearranged based on this list
+    
+    Raises:
+        TypeError: if df is not a pandas data frame or col_list is not a list
 
     Returns:
         pandas dataframe: reordered pandas dataframe

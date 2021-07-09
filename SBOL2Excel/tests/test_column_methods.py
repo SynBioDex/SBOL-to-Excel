@@ -102,7 +102,6 @@ def test_types(prop_val, raising_err, expected):
         assert col_meth_obj.prop_val == expected
 
 
-# test source organism
 @pytest.mark.parametrize(
     'prop_val, org_dict, raising_err, expected_prop, expected_dict', [
         (
@@ -119,6 +118,11 @@ def test_types(prop_val, raising_err, expected):
         ),
         (
             'thing',
+            {'4932': 'Saccharomyces cerevisiae'},
+            True, ValueError, 'NA'
+        ),
+        (
+            'https://synbiohub.org/sparql:898',
             {'4932': 'Saccharomyces cerevisiae'},
             True, ValueError, 'NA'
         ),
@@ -149,7 +153,79 @@ def test_source_organism(prop_val, org_dict, raising_err, expected_prop,
         assert col_meth_obj.prop_val == expected_prop
         assert col_meth_obj.org_dict == expected_dict
 
-# test target organism
 
-# test sequence
-# need test file to use (pichia??)
+@pytest.mark.parametrize(
+    'prop_val, org_dict, raising_err, expected_prop, expected_dict', [
+        (
+            'https://identifiers.org/taxonomy:4932',
+            {'4932': 'Saccharomyces cerevisiae'},
+            False, 'Saccharomyces cerevisiae',
+            {'4932': 'Saccharomyces cerevisiae'}
+        ),
+        (
+            'https://identifiers.org/taxonomy:562',
+            {'4932': 'Saccharomyces cerevisiae'},
+            False, 'Escherichia coli', {'4932': 'Saccharomyces cerevisiae',
+                                        '562': 'Escherichia coli'}
+        ),
+        (
+            'thing',
+            {'4932': 'Saccharomyces cerevisiae'},
+            True, ValueError, 'NA'
+        ),
+        (
+            'https://synbiohub.org/sparql:898',
+            {'4932': 'Saccharomyces cerevisiae'},
+            True, ValueError, 'NA'
+        ),
+        (
+            7,
+            {'4932': 'Saccharomyces cerevisiae'},
+            True, TypeError, 'NA'
+        ),
+        (
+            'https://identifiers.org/taxonomy:562',
+            'thing',
+            True, TypeError, 'NA'
+        )
+    ]
+)
+def test_target_organism(prop_val, org_dict, raising_err, expected_prop,
+                         expected_dict):
+    prop_nm = 'no_change'
+    sbol_doc = 'sbol_doc'
+    role_dict = 'role_dict'
+    col_meth_obj = cm.col_methods(prop_nm, prop_val, sbol_doc, role_dict,
+                                  org_dict)
+    if raising_err:
+        with pytest.raises(expected_prop):
+            col_meth_obj.target_organism()
+    else:
+        col_meth_obj.target_organism()
+        assert col_meth_obj.prop_val == expected_prop
+        assert col_meth_obj.org_dict == expected_dict
+
+
+@pytest.mark.parametrize(
+    'prop_val, raising_err, expected', [
+        (
+            'http://examples.org/aMF_u916__sequence/1', False,
+            "atgagatttcctagtattttcactgctgtgctatttgccgctagttcc"
+        ),
+        ('http://examples.org/aMF_u916__sequence/2', True, ValueError),
+        ('something_weird', True, ValueError),
+        (7, True, TypeError)
+    ]
+)
+def test_sequence(prop_val, raising_err, expected, sbol_doc):
+    prop_nm = 'no_change'
+    role_dict = 'role_dict'
+    org_dict = 'org_dict'
+    col_meth_obj = cm.col_methods(prop_nm, prop_val, sbol_doc, role_dict,
+                                  org_dict)
+    if raising_err:
+        with pytest.raises(expected):
+            col_meth_obj.sequence()
+    else:
+        col_meth_obj.sequence()
+        assert col_meth_obj.prop_val == expected

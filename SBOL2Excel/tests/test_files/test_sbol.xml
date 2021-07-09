@@ -16,7 +16,7 @@
   </sbol:ComponentDefinition>
   <sbol:Sequence rdf:about="http://examples.org/aMF_u916__sequence/1">
     <sbol:displayId>aMF_u916__sequence</sbol:displayId>
-    <sbol:elements>atgagatttcctagtattttcactgctgtgctatttgccgctagttccgctctagctgctccagttaatactactactgaagatgaattggagggtgacttcgatgttgctgttctgcctttttccgcttctatcgcagccaaggaagaaggtgtatctctagagaagcgt</sbol:elements>
+    <sbol:elements>atgagatttcctagtattttcactgctgtgctatttgccgctagttcc</sbol:elements>
     <sbol:persistentIdentity rdf:resource="http://examples.org/aMF_u916__sequence"/>
     <ns0:title>aMF&#916; Sequence</ns0:title>
     <sbol:encoding rdf:resource="http://www.chem.qmul.ac.uk/iubmb/misc/naseq.html"/>

@@ -1,4 +1,5 @@
 from requests_html import HTMLSession
+import sbol2
 
 
 class col_methods:
@@ -7,6 +8,21 @@ class col_methods:
     """
 
     def __init__(self, prop_nm, prop_val, sbol_doc, role_dict, org_dict):
+        """The switch statement to call different methods based on prop_nm
+
+        Args:
+            prop_nm (str): the name of the property
+            prop_val (str): the value of the property
+            sbol_doc (sbol document): sbol document containing the properties
+                                being passed in
+            role_dict (dictionary): maps sequence ontology terms to human
+                                readable names
+            org_dict (dictionary): maps ncbi txids to human readable names
+
+        Raises:
+            TypeError: If the prop_val passed in is not a string
+
+        """
         # global varibales for dataframe switch statements
         self.prop_nm = prop_nm
         self.prop_val = prop_val
@@ -18,10 +34,10 @@ class col_methods:
             raise TypeError
         # if the column name matches the function name, call the function
         try:
-            return getattr(self, self.prop_nm)()
+            getattr(self, self.prop_nm)()
         # if the column name does not match the function name, call 'no_change'
         except AttributeError:
-            return getattr(self, 'no_change')()
+            getattr(self, 'no_change')()
 
     def no_change(self):
         """Else case for the switch statement"""
@@ -37,7 +53,12 @@ class col_methods:
 
     def types(self):
         """Split types uri to only be the last bit after the final hash
+
+        Raises:
+            TypeError: If self.prop_val is not a string
+            ValueError: If self.prop_val does not contain a #
         """
+
         if type(self.prop_val) is not str:
             raise TypeError
         elif '#' not in self.prop_val:
@@ -47,17 +68,40 @@ class col_methods:
 
     def sequence(self):
         """Gets the sequence from the document based on the sequence uri
+
+        Raises:
+            TypeError: If the prop_val from initialisation is not a string
+            ValueError: If the prop_val from initialisation is not a uri
+                    in the sbol document provided at initialisation
         """
-        self.prop_val = self.sbol_doc.getSequence(self.prop_val).elements
+        if type(self.prop_val) is not str:
+            raise TypeError
+        else:
+            try:
+                temp = self.sbol_doc.getSequence(self.prop_val)
+                self.prop_val = temp.elements
+            except sbol2.sbolerror.SBOLError:
+                # if uri not found in document
+                raise ValueError
 
     def source_organism(self):
-        """Converts a uri containing a txid into a human readable name
+        """        Converts a uri containing a txid into a human readable name
         either by using the ontology provided or by pulling the name from
         the ncbi database. If the name is pulled from the database it is added
         to the ontology for the rest of the program run (the assumption is
         that a rare organism may be used multiple times)
+
+        Raises:
+            TypeError: if self.prop_val is not a string
+            ValueError: if self.prop_val doesn't contain
+                        'https://identifiers.org/taxonomy:'
+            TypeError: if self.org_dict is not a dictionary
         """
         if type(self.prop_val) is not str:
+            raise TypeError
+        elif 'https://identifiers.org/taxonomy:' not in self.prop_val:
+            raise ValueError
+        if type(self.org_dict) is not dict:
             raise TypeError
 
         txid = str(self.prop_val).split(':')[-1]
@@ -71,6 +115,6 @@ class col_methods:
             self.prop_val = v.text
             self.org_dict[txid] = self.prop_val
 
-    def targetOrganism(self):
+    def target_organism(self):
         """Same function as source_organism"""
         self.source_organism()
