@@ -3,3 +3,5 @@
 sbolenv
 .vscode
 sbol2excel.egg-info
+__pychace__
+.pytest_cache
