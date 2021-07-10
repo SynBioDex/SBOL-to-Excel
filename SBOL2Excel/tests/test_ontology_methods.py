@@ -27,7 +27,7 @@ def test_prop_convert(prop, raising_err, expected):
 
 @pytest.mark.parametrize(
     'onto_version, raising_err, expected_error', [
-        ('ontologies_v001.xlsx', False, 'NA'),
+        ('ontologies_v000.xlsx', False, 'NA'),
         ('ontologies_v002.xlsx', True, ValueError),
         ('thing', True, ValueError),
         (76868, True, TypeError)
@@ -44,7 +44,7 @@ def test_organism_ontology(onto_version, raising_err, expected_error,
 
 @pytest.mark.parametrize(
     'onto_version, raising_err, expected_error', [
-        ('ontologies_v001.xlsx', False, 'NA'),
+        ('ontologies_v000.xlsx', False, 'NA'),
         ('ontologies_v002.xlsx', True, ValueError),
         ('thing', True, ValueError),
         (76868, True, TypeError)

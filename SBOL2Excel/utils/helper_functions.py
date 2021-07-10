@@ -54,7 +54,7 @@ def reorder_col(df, col_list):
         col_list (list): A list of column names which may or may not
                         overlap with the column names in df. The df
                         column order will be rearranged based on this list
-    
+
     Raises:
         TypeError: if df is not a pandas data frame or col_list is not a list
 
