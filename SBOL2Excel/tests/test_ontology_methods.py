@@ -6,14 +6,14 @@ import utils.ontology_methods as om
 
 @pytest.mark.parametrize(
     'prop, raising_err, expected', [
-        ("http://sbols.org/v2#type", False, 'types'),
-        ("http://purl.org/dc/terms/title", False, 'title'),
+        ("http://sbols.org/v2#type", False, 'Types'),
+        ("http://purl.org/dc/terms/title", False, 'Part Name'),
         ("http://purl.obolibrary.org/obo/OBI_0001617", False, 'OBI_0001617'),
         (
             "https://wiki.synbiohub.org/wiki/Terms/synbiohub#sourceOrganism",
-            False, 'sourceOrganism'
+            False, 'Source Organism'
         ),
-        ("http://purl.org/dc/terms/description", False, 'description'),
+        ("http://purl.org/dc/terms/description", False, 'Part Description'),
         (76868, True, ValueError)
     ]
 )

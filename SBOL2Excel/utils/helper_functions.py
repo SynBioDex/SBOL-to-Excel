@@ -61,20 +61,6 @@ def reorder_col(df, col_list):
     Returns:
         pandas dataframe: reordered pandas dataframe
     """
-    # columnNames = ['Part Name',
-    #                 'Role',
-    #                 'Design Notes',
-    #                 'Altered Sequence',
-    #                 'Part Description',
-    #                 'Data Source Prefix',
-    #                 'Data Source',
-    #                 'Source Organism',
-    #                 'Target Organism',
-    #                 'Circular',
-    #                 'length (bp)',
-    #                 'Sequence',
-    #                 'Data Source',
-    #                 'Composite']
 
     # check inputs are expected types
     if type(df) != pd.core.frame.DataFrame:

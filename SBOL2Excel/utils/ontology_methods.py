@@ -102,13 +102,20 @@ def prop_convert(prop):
 
         if idx >= 1:
             prop = prop[idx + 1:]
+            prop = prop.title()
 
-        if prop == 'type':
-            prop = 'types'
+        if prop == 'Type':
+            prop = 'Types'
+        if prop == 'Sourceorganism':
+            prop = 'Source Organism'
+        if prop == 'Targetorganism':
+            prop = 'Target Organism'
+        if prop == 'Designnotes':
+            prop = 'Design Notes'
         if prop == 'http://purl.org/dc/terms/title':
-            prop = 'title'
+            prop = 'Part Name'
         if prop == 'http://purl.org/dc/terms/description':
-            prop = 'description'
+            prop = 'Part Description'
         if prop == 'http://purl.obolibrary.org/obo/OBI_0001617':
             prop = 'OBI_0001617'
 

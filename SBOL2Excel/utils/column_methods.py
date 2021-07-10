@@ -1,5 +1,6 @@
 from requests_html import HTMLSession
 import sbol2
+import rdflib
 
 
 class col_methods:
@@ -19,9 +20,6 @@ class col_methods:
                                 readable names
             org_dict (dictionary): maps ncbi txids to human readable names
 
-        Raises:
-            TypeError: If the prop_val passed in is not a string
-
         """
         # global varibales for dataframe switch statements
         self.prop_nm = prop_nm
@@ -30,8 +28,12 @@ class col_methods:
         self.role_dict = role_dict
         self.org_dict = org_dict
 
-        if type(self.prop_nm) is not str:
-            raise TypeError
+        function_call_dict = {'Role': 'role', 'Types': 'types',
+                              'Sequence': 'sequence',
+                              'Source Organism': 'organism',
+                              'Target Organism': 'organism'}
+        if self.prop_nm in function_call_dict:
+            self.prop_nm = function_call_dict[self.prop_nm]
         # if the column name matches the function name, call the function
         try:
             getattr(self, self.prop_nm)()
@@ -55,13 +57,10 @@ class col_methods:
         """Split types uri to only be the last bit after the final hash
 
         Raises:
-            TypeError: If self.prop_val is not a string
             ValueError: If self.prop_val does not contain a #
         """
-
-        if type(self.prop_val) is not str:
-            raise TypeError
-        elif '#' not in self.prop_val:
+        self.prop_val = str(self.prop_val)
+        if '#' not in self.prop_val:
             raise ValueError
         else:
             self.prop_val = self.prop_val.split('#')[-1]
@@ -70,11 +69,12 @@ class col_methods:
         """Gets the sequence from the document based on the sequence uri
 
         Raises:
-            TypeError: If the prop_val from initialisation is not a string
+            TypeError: If the prop_val from initialisation is not a uri
+                        or string
             ValueError: If the prop_val from initialisation is not a uri
                     in the sbol document provided at initialisation
         """
-        if type(self.prop_val) is not str:
+        if type(self.prop_val) not in [rdflib.term.URIRef, str]:
             raise TypeError
         else:
             try:
@@ -84,7 +84,7 @@ class col_methods:
                 # if uri not found in document
                 raise ValueError
 
-    def source_organism(self):
+    def organism(self):
         """        Converts a uri containing a txid into a human readable name
         either by using the ontology provided or by pulling the name from
         the ncbi database. If the name is pulled from the database it is added
@@ -92,12 +92,12 @@ class col_methods:
         that a rare organism may be used multiple times)
 
         Raises:
-            TypeError: if self.prop_val is not a string
+            TypeError: if self.prop_val is not a string or uri
             ValueError: if self.prop_val doesn't contain
                         'https://identifiers.org/taxonomy:'
             TypeError: if self.org_dict is not a dictionary
         """
-        if type(self.prop_val) is not str:
+        if type(self.prop_val) not in [rdflib.term.URIRef, str]:
             raise TypeError
         elif 'https://identifiers.org/taxonomy:' not in self.prop_val:
             raise ValueError
@@ -110,11 +110,7 @@ class col_methods:
             self.prop_val = self.org_dict[txid]
         else:
             session = HTMLSession()
-            r = session.get(self.prop_val)
+            r = session.get(f'https://identifiers.org/taxonomy:{txid}')
             v = r.html.find('strong', first=True)
             self.prop_val = v.text
             self.org_dict[txid] = self.prop_val
-
-    def target_organism(self):
-        """Same function as source_organism"""
-        self.source_organism()
