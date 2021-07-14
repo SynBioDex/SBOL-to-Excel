@@ -5,12 +5,12 @@ SBOL-to-Excel is an open source python library that converts [SBOL documents]() 
 For further depth and information on SBOL-to-Excel, including how to contribute to the project, visit the SBOL-to-EXCEL wiki on github
 
 # Table of Contents
-- [Installation & How to Use]()
+- [Installation & How to Use](https://github.com/SynBioDex/SBOL-to-Excel#installation--how-to-use)
   -  [Installation](https://github.com/SynBioDex/SBOL-to-Excel#installation)
-  -  [How to Use]()
-- [Example Conversion]()
-- [Architecture]()
-- [Publishing]()
+  -  [How to Use](https://github.com/SynBioDex/SBOL-to-Excel#how-to-use)
+- [Example Conversion](https://github.com/SynBioDex/SBOL-to-Excel#example-conversion)
+- [Architecture](https://github.com/SynBioDex/SBOL-to-Excel#architecture)
+- [Publishing](https://github.com/SynBioDex/SBOL-to-Excel#publishing)
 
 # SBOL-to-Excel: Installation & How to Use
 
