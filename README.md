@@ -5,12 +5,12 @@ SBOL-to-Excel is an open source python library that converts [SBOL documents]() 
 For further depth and information on SBOL-to-Excel, including how to contribute to the project, visit the SBOL-to-EXCEL wiki on github
 
 # Table of Contents
-- [Installation & How to Use]()
-  -  [Installation]()
-  -  [How to Use]()
-- [Example Conversion]()
-- [Architecture]()
-- [Publishing]()
+- [Installation & How to Use](installation--how-to-use)
+  -  [Installation](#installation)
+  -  [How to Use](#how-to-use)
+- [Example Conversion](#example-conversion)
+- [Architecture](#architecture)
+- [Publishing](#publishing)
 
 # SBOL-to-Excel: Installation & How to Use
 
