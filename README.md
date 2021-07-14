@@ -6,7 +6,7 @@ For further depth and information on SBOL-to-Excel, including how to contribute 
 
 # Table of Contents
 - [Installation & How to Use]()
-  -  [Installation]()
+  -  [Installation](https://github.com/SynBioDex/SBOL-to-Excel#installation)
   -  [How to Use]()
 - [Example Conversion]()
 - [Architecture]()
