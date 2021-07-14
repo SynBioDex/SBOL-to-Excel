@@ -27,6 +27,31 @@ To get the latest version you can use git clone https://github.com/SynBioDex/SBO
 
 **3) Run the Converter** Use the code below substituting {things in curly brackets} with the appropriate values.
 
+```
+import utils.converter as conv
+import os
+
+cwd = os.getcwd()
+sbol_doc_path = os.path.join(cwd, {file_path})
+output_path = os.path.join(cwd, {output_excel_file})
+conv.converter(sbol_doc_path, output_path)
+```
+
+An Example:
+
+```
+import utils.converter as conv
+import os
+
+
+cwd = os.getcwd()
+sbol_doc_path = os.path.join(cwd, 'SBOL2Excel', 'tests', 'test_files',
+                             'test_sbol.xml')
+output_path = os.path.join(cwd, 'test.xlsx')
+conv.converter(sbol_doc_path, output_path)
+```
+Tip: the use of `os.getcwd()` and `os.path.join` is reccommended for the creation of the file paths. This is safer from a cybersecurity stand point and provide better operating system interoperability.
+
 # Example Conversion
 
 # Architecture
