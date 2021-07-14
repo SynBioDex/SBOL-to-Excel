@@ -52,7 +52,17 @@ conv.converter(sbol_doc_path, output_path)
 ```
 Tip: the use of `os.getcwd()` and `os.path.join` is reccommended for the creation of the file paths. This is safer from a cybersecurity stand point and provide better operating system interoperability.
 
+**4) Use the Output File** The Excel file that is output can then be used to further analyze your given SBOL file. You can find more of SBOL files to convert into an Exel format by searching an SBOL repository like [SynBioHub](https://synbiohub.org/).
+
 # Example Conversion
+
+An [SBOL file](https://github.com/SynBioDex/SBOL-to-Excel/blob/master/SBOL2Excel/resources/templates/pichia_toolkit_KWK_v002.xml) from [SynBioHub](https://synbiohub.org/) was converted to a data-filled Excel spreadsheet.
+
+**Example SBOL**
+![example_sbol](https://user-images.githubusercontent.com/29416272/125694833-9aa804eb-7deb-4622-adc9-88f4cdb6ddcc.png)
+
+**Example Spreadsheet**
+![example_spreadsheet](https://user-images.githubusercontent.com/29416272/125695415-8796ad91-5c42-4078-9019-e1a1087ff338.png)
 
 # Architecture
 The [repository architecture and module architecture](https://github.com/SynBioDex/SBOL-to-Excel/wiki) are described in the wiki.
