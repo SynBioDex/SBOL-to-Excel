@@ -7,7 +7,7 @@ For further depth and information on SBOL-to-Excel, including how to contribute 
 # Table of Contents
 - [Installation & How to Use]()
   -  [Installation]()
-  -  [How to Use]()
+  -  [How to Use](#how-to-use)
 - [Example Conversion]()
 - [Architecture]()
 - [Publishing]()
