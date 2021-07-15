@@ -12,7 +12,7 @@ def role_ontology(onto_version):
 
     Raises:
         TypeError: The onto_version supplied is not a string
-        ValueError: The onto_version supplied does not point to a file int the
+        ValueError: The onto_version supplied does not point to a file in the
                     Ontology Sheets folder
 
     Returns:
