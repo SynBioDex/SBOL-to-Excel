@@ -26,6 +26,6 @@ jobs:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
-        cd ./excel2sbol
+        cd ./SBOL2Excel
         python setup.py sdist bdist_wheel
         twine upload dist/*
