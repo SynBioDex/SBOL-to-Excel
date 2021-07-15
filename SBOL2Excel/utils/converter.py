@@ -5,6 +5,7 @@ import utils.helper_functions as hf
 
 def converter(sbol_doc_path, output_path):
     onto_version = 'ontologies_v001.xlsx'
+    output_template = 'Output_Template_v001.xlsx'
     col_list = ['Identity',
                 'Part Name',
                 'Role',
@@ -41,5 +42,5 @@ def converter(sbol_doc_path, output_path):
     df = df.drop(columns=drop_list_intersect)
 
     # output to excel
-    sm.df_to_excel(df, output_path, 'Output_Template_v001.xlsx')
+    sm.df_to_excel(df, output_path, output_template)
     return
