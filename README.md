@@ -62,7 +62,7 @@ An [SBOL file](https://github.com/SynBioDex/SBOL-to-Excel/blob/master/SBOL2Excel
 ![example_sbol](https://user-images.githubusercontent.com/29416272/125694833-9aa804eb-7deb-4622-adc9-88f4cdb6ddcc.png)
 
 **Example Spreadsheet**
-![example_spreadsheet](https://user-images.githubusercontent.com/29416272/125695415-8796ad91-5c42-4078-9019-e1a1087ff338.png)
+![test](https://user-images.githubusercontent.com/29416272/125802728-ba119735-8940-4853-998c-b54e78a98d9c.png)
 
 # Architecture
 The [repository architecture and module architecture](https://github.com/SynBioDex/SBOL-to-Excel/wiki) are described in the wiki.
