@@ -25,7 +25,7 @@ jobs:
       run: |
         echo ${{ github.event.release.tag_name }}
         cd ./SBOL2Excel
-        ls
+        sed -i 's/version=.*/version=\'${{ github.event.release.tag_name }}\'/g' setup.py
         cat setup.py
     - name: Build and publish
       env:
