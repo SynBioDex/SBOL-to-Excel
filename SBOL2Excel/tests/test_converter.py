@@ -1,7 +1,7 @@
 # To be written at a later date
 # # run by typing 'pytest' into the terminal
 # # for more detailed output use 'pytest -v -s'
-# import utils.converter as conv
+# import sbol2excel.converter as conv
 # import pytest
 
 

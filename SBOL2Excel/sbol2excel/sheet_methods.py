@@ -4,9 +4,9 @@ import pandas as pd
 from openpyxl import load_workbook
 from openpyxl.worksheet.table import Table, TableStyleInfo
 from openpyxl.utils.dataframe import dataframe_to_rows
-import utils.ontology_methods as om
-import utils.column_methods as cm
-import utils.helper_functions as hf
+import sbol2excel.ontology_methods as om
+import sbol2excel.column_methods as cm
+import sbol2excel.helper_functions as hf
 import logging
 
 
@@ -107,7 +107,7 @@ def df_to_excel(df, output_path, output_template):
     # load workbook
     file_dir = os.path.dirname(__file__)
     SBOL2Excel_path = os.path.split(file_dir)[0]
-    output_template_path = os.path.join(SBOL2Excel_path, 'utils',
+    output_template_path = os.path.join(SBOL2Excel_path, 'sbol2excel',
                                         'Output_Templates', output_template)
     if not os.path.isfile(output_template_path):
         raise ValueError

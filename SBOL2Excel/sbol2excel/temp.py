@@ -1,4 +1,4 @@
-import utils.converter as conv
+import sbol2excel.converter as conv
 import os
 
 

@@ -3,7 +3,7 @@ import os
 
 
 def role_ontology(onto_version):
-    """Reads in a role ontology sheet from the utils/Ontology sheets folder
+    """Reads in a role ontology sheet from the sbol2excel/Ontology sheets folder
     based on the onto_version supplied
 
     Args:
@@ -43,7 +43,7 @@ def role_ontology(onto_version):
 
 
 def organism_ontology(onto_version):
-    """Reads in an organism ontology sheet from the utils/Ontology sheets folder
+    """Reads in an organism ontology sheet from the sbol2excel/Ontology sheets folder
     based on the onto_version supplied
 
     Args:

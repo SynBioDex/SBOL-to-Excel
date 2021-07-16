@@ -1,7 +1,7 @@
 # run by typing 'pytest' into the terminal
 # for more detailed output use 'pytest -v -s'
 import pytest
-import utils.ontology_methods as om
+import sbol2excel.ontology_methods as om
 
 
 @pytest.mark.parametrize(

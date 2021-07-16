@@ -1,7 +1,7 @@
 # run by typing 'pytest' into the terminal
 # for more detailed output use 'pytest -v -s'
 import pytest
-import utils.helper_functions as hf
+import sbol2excel.helper_functions as hf
 import pandas as pd
 
 

@@ -3,7 +3,7 @@
 import pytest
 import os
 import pandas as pd
-import utils.sheet_methods as sm
+import sbol2excel.sheet_methods as sm
 
 
 @pytest.mark.parametrize(

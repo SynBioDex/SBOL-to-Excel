@@ -1,6 +1,6 @@
-import utils.sheet_methods as sm
-import utils.ontology_methods as om
-import utils.helper_functions as hf
+import sbol2excel.sheet_methods as sm
+import sbol2excel.ontology_methods as om
+import sbol2excel.helper_functions as hf
 
 
 def converter(sbol_doc_path, output_path):

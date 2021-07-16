@@ -1,7 +1,7 @@
 # run by typing 'pytest' into the terminal
 # for more detailed output use 'pytest -v -s'
 import pytest
-import utils.column_methods as cm
+import sbol2excel.column_methods as cm
 
 
 @pytest.mark.parametrize(
