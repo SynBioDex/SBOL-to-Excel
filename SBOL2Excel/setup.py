@@ -1,13 +1,8 @@
-"""
-Created on Tuesday June 22 7:12:00 2021
-@author: isapoetzsch
-"""
-
 from setuptools import find_packages, setup
 
 setup(name='sbol2excel',
       version='1.0.0-alpha-10',
-      url='https://github.com/SynBioDex/SBOL-to-Excel/tree/master/SBOL-to-Excel',
+      url='https://github.com/SynBioDex/SBOL-to-Excel',
       license='BSD 3-clause',
       maintainer='Julian Abam',
       maintainer_email='abamaj@gmail.com',
