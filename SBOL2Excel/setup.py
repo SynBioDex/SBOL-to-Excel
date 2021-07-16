@@ -6,7 +6,7 @@ Created on Tuesday June 22 7:12:00 2021
 from setuptools import find_packages, setup
 
 setup(name='sbol2excel',
-      version='1.0.0-alpha-8',
+      version='1.0.0-alpha-9',
       url='https://github.com/SynBioDex/SBOL-to-Excel/tree/master/SBOL-to-Excel',
       license='BSD 3-clause',
       maintainer='Julian Abam',
