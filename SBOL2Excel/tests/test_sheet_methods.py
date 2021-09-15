@@ -6,41 +6,41 @@ import pandas as pd
 import sbol2excel.sheet_methods as sm
 
 
-@pytest.mark.parametrize(
-    'sbol_test_doc, raising_err, expected', [
-        ('test_sbol.xml', False, 'use_fixture'),
-        ("string", True, ValueError)
-    ]
-)
-def test_sbol_to_df(sbol_test_doc, raising_err, expected,
-                    org_onto_v001_expected, role_onto_v001_expected,
-                    sbol_to_df_expected):
+# @pytest.mark.parametrize(
+#     'sbol_test_doc, raising_err, expected', [
+#         ('test_sbol.xml', False, 'use_fixture'),
+#         ("string", True, ValueError)
+#     ]
+# )
+# def test_sbol_to_df(sbol_test_doc, raising_err, expected,
+#                     org_onto_v001_expected, role_onto_v001_expected,
+#                     sbol_to_df_expected):
 
-    file_dir = os.path.dirname(__file__)
-    sbol_doc_path = os.path.join(file_dir, 'test_files', sbol_test_doc)
+#     file_dir = os.path.dirname(__file__)
+#     sbol_doc_path = os.path.join(file_dir, 'test_files', sbol_test_doc)
 
-    if raising_err:
-        with pytest.raises(expected):
-            sm.sbol_to_df(sbol_doc_path, role_onto_v001_expected,
-                          org_onto_v001_expected)
-    else:
-        df = sm.sbol_to_df(sbol_doc_path, role_onto_v001_expected,
-                           org_onto_v001_expected)
+#     if raising_err:
+#         with pytest.raises(expected):
+#             sm.sbol_to_df(sbol_doc_path, role_onto_v001_expected,
+#                           org_onto_v001_expected)
+#     else:
+#         df = sm.sbol_to_df(sbol_doc_path, role_onto_v001_expected,
+#                            org_onto_v001_expected)
 
-        df_dict = df.to_dict(orient='list')
+#         df_dict = df.to_dict(orient='list')
 
-        if expected == 'use_fixture':
-            # done this way as nan is not equal to itself
-            # additionally, due to xml not having a fixed order rows can
-            # be read in in a different order
-            for key in df_dict:
-                ls = set(df_dict[key])
-                ls = {it for it in ls if pd.notna(it)}
-                ls_expected = set(sbol_to_df_expected[key])
-                ls_expected = {it for it in ls_expected if pd.notna(it)}
-                assert ls == ls_expected
-        else:
-            assert df_dict == expected
+#         if expected == 'use_fixture':
+#             # done this way as nan is not equal to itself
+#             # additionally, due to xml not having a fixed order rows can
+#             # be read in in a different order
+#             for key in df_dict:
+#                 ls = set(df_dict[key])
+#                 ls = {it for it in ls if pd.notna(it)}
+#                 ls_expected = set(sbol_to_df_expected[key])
+#                 ls_expected = {it for it in ls_expected if pd.notna(it)}
+#                 assert ls == ls_expected
+#         else:
+#             assert df_dict == expected
 
 
 @pytest.mark.parametrize(
