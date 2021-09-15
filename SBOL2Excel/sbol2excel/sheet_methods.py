@@ -36,11 +36,6 @@ def sbol_to_df(sbol_doc_path, role_dict, org_dict):
 
     doc = sbol2.Document()
 
-    if os.path.isfile(sbol_doc_path):
-        doc.read(sbol_doc_path)
-    else:
-        raise ValueError
-
     # create a dictionary to hold all the component defintions' information
     cd_dict = {}
 
