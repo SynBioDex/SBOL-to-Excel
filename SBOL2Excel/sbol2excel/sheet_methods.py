@@ -34,7 +34,9 @@ def sbol_to_df(sbol_doc_path, role_dict, org_dict):
                     definition then pd.nan is used to fill the gap
     """
 
+    # create document object
     doc = sbol2.Document()
+    doc.read(sbol_doc_path)
 
     # create a dictionary to hold all the component defintions' information
     cd_dict = {}
@@ -118,7 +120,6 @@ def df_to_excel(df, output_path, output_template):
     for row in df_row_obj:
         ws.append(row)
 
-    # create table in information area
     tab = Table(displayName="Table1", ref=f"{up_l_tbl_cell}:{bt_r_tbl_cell}")
 
     # style the table
