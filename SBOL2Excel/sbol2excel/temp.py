@@ -4,6 +4,8 @@ import requests
 
 cwd = os.getcwd()
 
+
+
 def callTest(cwd):
     """
     To test the fuctionality of the sbol2excel converter, run this funtion with
@@ -24,11 +26,11 @@ def callURI(URI, cwd):
     new_xml = 'myFile.xml'
     imported_xml = requests.get(URI)
     output_path_new_xml = os.path.join(cwd, 'SBOL2Excel', 'tests', 'test_files', 
-                new_xml)
+                    new_xml)
     file = open(output_path_new_xml, "w")
     file.write(imported_xml.text)
     file.close()
     sbol_doc_path_new_xml = os.path.join(cwd, 'SBOL2Excel', 'tests', 'test_files', 
-                new_xml)
+                    new_xml)
     output_path_excel = os.path.join(cwd, 'my_xml_to_excel.xlsx')
     conv.converter(sbol_doc_path_new_xml, output_path_excel)
