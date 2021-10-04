@@ -1,8 +1,14 @@
 import pandas as pd
+"""
+Here we have a grouping of helper functions.
+
+These functions assist in the dataframe formatting.
+"""
 
 
 def col_to_num(col_ind):
-    """Generates Excel Column Name String based on an intger input,
+    """
+    Generates Excel Column Name String based on an intger input,
     E.g. 1 is A and 27 is AA.
 
     Args:
