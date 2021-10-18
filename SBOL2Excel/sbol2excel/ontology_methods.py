@@ -1,10 +1,12 @@
+"""This module handles the fetching of ontology terms."""
 import pandas as pd
 import os
 
 
 def role_ontology(onto_version):
-    """Reads in a role ontology sheet from the sbol2excel/Ontology sheets folder
-    based on the onto_version supplied
+    """Read in a role ontology sheet from the sbol2excel/Ontology sheets folder.
+
+    Reads in based on the onto_version supplied
 
     Args:
         onto_version (string): the name of the file in the Ontology Sheets
@@ -43,8 +45,9 @@ def role_ontology(onto_version):
 
 
 def organism_ontology(onto_version):
-    """Reads in an organism ontology sheet from the sbol2excel/Ontology sheets folder
-    based on the onto_version supplied
+    """Read in organism ontology sheet from the sbol2excel/Ontology sheets folder.
+
+    Reads in based on the onto_version supplied
 
     Args:
         onto_version (string): the name of the file in the Ontology Sheets
@@ -83,8 +86,7 @@ def organism_ontology(onto_version):
 
 
 def prop_convert(prop):
-    """Takes property urls and converts them into more human readable
-    names.
+    """Take property urls and converts them into more human readable names.
 
     Args:
         prop (str): a url for a property, e.g. http://purl.org/dc/terms/title

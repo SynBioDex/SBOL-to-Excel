@@ -1,3 +1,9 @@
+"""This module features the formatting of the dataframe.
+
+The dataframe will be prepared to be output in Excel format.
+
+"""
+
 import os
 import sbol2
 import pandas as pd
@@ -11,7 +17,9 @@ import logging
 
 
 def sbol_to_df(sbol_doc_path, role_dict, org_dict):
-    """Reads in an sbol file and returns a df with uri/persistent identity of
+    """Read in an sbol file and returns a dataframe.
+
+    The dataframe will be output with uri/persistent identity of
     each component defintion as index and each property being a column
 
 
@@ -75,7 +83,7 @@ def sbol_to_df(sbol_doc_path, role_dict, org_dict):
 
 
 def df_to_excel(df, output_path, output_template):
-    """Outputs a df into an excel template
+    """Output a df into an excel template.
 
     Args:
         df (pandas dataframe): The dataframe to put into the excel

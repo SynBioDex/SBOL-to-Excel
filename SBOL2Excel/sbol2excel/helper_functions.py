@@ -1,8 +1,15 @@
+"""
+Presented here are a grouping of helper functions.
+
+These functions assist in the dataframe formatting.
+"""
+
 import pandas as pd
 
 
 def col_to_num(col_ind):
-    """Generates Excel Column Name String based on an intger input,
+    """Generate Excel Column Name String based on an intger input.
+
     E.g. 1 is A and 27 is AA.
 
     Args:
@@ -40,11 +47,12 @@ def col_to_num(col_ind):
 
 
 def reorder_col(df, col_list):
-    """A function to reorder the columns of a pandas dataframe based on a
-    list of column names. The intersection of the column list and the dataframe
-    column names may be >=0. Any df columns found in the column list are
-    reordered according to the order in the column list and are moved to the
-    front. The rest of the columns maintain the same order.
+    """Reorder the columns of a pandas dataframe.
+
+    Based on a list of column names. The intersection of the column list and
+    the dataframe column names may be >=0. Any df columns found in the column
+    list are reordered according to the order in the column list and are
+    moved to the front. The rest of the columns maintain the same order.
     For example a dataframe: A, C, D, E, F with a column list E, A, G, H
     will lead to a new dataframe with the columns ordered: E, A, C, D, F
 
@@ -61,7 +69,6 @@ def reorder_col(df, col_list):
     Returns:
         pandas dataframe: reordered pandas dataframe
     """
-
     # check inputs are expected types
     if type(df) != pd.core.frame.DataFrame:
         raise TypeError
