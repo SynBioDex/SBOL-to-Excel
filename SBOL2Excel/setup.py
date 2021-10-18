@@ -1,4 +1,11 @@
+"""This file features information about modules and packages.
+
+The packages areutilized by SBOL-to-Excel
+
+"""
+
 from setuptools import find_packages, setup
+
 
 setup(name='sbol2excel',
       version='1.0.0-alpha-10',
