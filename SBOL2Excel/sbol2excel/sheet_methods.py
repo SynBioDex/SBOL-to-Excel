@@ -41,6 +41,7 @@ def sbol_to_df(sbol_doc_path, role_dict, org_dict):
                     as columns. If a property doesn't exist for a component
                     definition then pd.nan is used to fill the gap
     """
+
     # create document object
     doc = sbol2.Document()
     doc.read(sbol_doc_path)
