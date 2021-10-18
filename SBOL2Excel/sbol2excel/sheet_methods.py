@@ -1,3 +1,9 @@
+"""This module features the formatting of the dataframe.
+
+The dataframe will be prepared to be output in Excel format.
+
+"""
+
 import os
 import sbol2
 import pandas as pd
@@ -11,7 +17,9 @@ import logging
 
 
 def sbol_to_df(sbol_doc_path, role_dict, org_dict):
-    """Reads in an sbol file and returns a df with uri/persistent identity of
+    """Read in an sbol file and returns a dataframe.
+
+    The dataframe will be output with uri/persistent identity of
     each component defintion as index and each property being a column
 
 
@@ -33,8 +41,6 @@ def sbol_to_df(sbol_doc_path, role_dict, org_dict):
                     as columns. If a property doesn't exist for a component
                     definition then pd.nan is used to fill the gap
     """
-
-
     # create document object
     doc = sbol2.Document()
     doc.read(sbol_doc_path)
@@ -76,7 +82,7 @@ def sbol_to_df(sbol_doc_path, role_dict, org_dict):
 
 
 def df_to_excel(df, output_path, output_template):
-    """Outputs a df into an excel template
+    """Output a df into an excel template.
 
     Args:
         df (pandas dataframe): The dataframe to put into the excel
@@ -99,7 +105,7 @@ def df_to_excel(df, output_path, output_template):
     up_l_tbl_cell = f"A{start_row}"
 
     df_num_rows = len(df)
-    df_num_cols = len(df.columns) 
+    df_num_cols = len(df.columns)
     bt_r_tbl_cell = f"{hf.col_to_num(df_num_cols)}{df_num_rows+start_row}"
 
     # load workbook
@@ -121,7 +127,7 @@ def df_to_excel(df, output_path, output_template):
     for row in df_row_obj:
         ws.append(row)
 
-    tab = Table(displayName="Table1", ref= f"{up_l_tbl_cell}:{bt_r_tbl_cell}")
+    tab = Table(displayName="Table1", ref=f"{up_l_tbl_cell}:{bt_r_tbl_cell}")
 
     # style the table
     style = TableStyleInfo(name="TableStyleLight4",
