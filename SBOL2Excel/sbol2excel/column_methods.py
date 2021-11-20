@@ -4,12 +4,13 @@ import rdflib
 
 
 class col_methods:
-    """A class used to carry out a switch case statement for different\
-       properties in SBOL files
+    """Class used to carry out a switch case statement.
+
+    This is for properties in SBOL files
     """
 
     def __init__(self, prop_nm, prop_val, sbol_doc, role_dict, org_dict):
-        """The switch statement to call different methods based on prop_nm
+        """Switch statement to call different methods based on prop_nm.
 
         Args:
             prop_nm (str): the name of the property

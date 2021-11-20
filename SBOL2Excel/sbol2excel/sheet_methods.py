@@ -10,10 +10,24 @@ import pandas as pd
 from openpyxl import load_workbook
 from openpyxl.worksheet.table import Table, TableStyleInfo
 from openpyxl.utils.dataframe import dataframe_to_rows
+from rdflib import Graph
 import sbol2excel.ontology_methods as om
 import sbol2excel.column_methods as cm
 import sbol2excel.helper_functions as hf
 import logging
+
+# new function
+
+
+def get_top_level(sbol_doc_path):
+    """Retrieve toplevel ModuleDefinitions."""
+    doc_graph = Graph()
+    doc_graph.parse(sbol_doc_path)
+    top_level = []
+    for subject, predicate, _object in enumerate(doc_graph):
+        if subject == _object:
+            top_level.append(subject)
+    return top_level
 
 
 def sbol_to_df(sbol_doc_path, role_dict, org_dict):
@@ -31,7 +45,6 @@ def sbol_to_df(sbol_doc_path, role_dict, org_dict):
         org_dict (dictionary): dictionary to convert organism ncbi txid
                         uris to human readable format.
                         E.g. {'21': 'Phenylobacterium immobile'}
-
     Raises:
         ValueError: if the sbol_doc_path does not point to a file
 
@@ -41,8 +54,8 @@ def sbol_to_df(sbol_doc_path, role_dict, org_dict):
                     as columns. If a property doesn't exist for a component
                     definition then pd.nan is used to fill the gap
     """
-
     # create document object
+    top_level = (sbol_doc_path)
     doc = sbol2.Document()
     doc.read(sbol_doc_path)
 
@@ -50,21 +63,22 @@ def sbol_to_df(sbol_doc_path, role_dict, org_dict):
     cd_dict = {}
 
     # iterate through the component definitions
+    # componentDefinitions
     for cd in doc.componentDefinitions:
         # create a dictionary that has a key for the
         # component definition's identity,
         # and a value for all of its features
         comp_features = {}
         cd_uri = cd.identity
-
         # iterate through the properties of the component defintions
         # and set them equal to prop_val variable
         for prop in cd.properties:
-            try:
-                prop_val = cd.properties[prop][0]
-            except IndexError:
-                prop_val = cd.properties[prop]
-                # extract attribute property type
+            if prop in top_level:
+                try:
+                    prop_val = cd.properties[prop][0]
+                except IndexError:
+                    prop_val = cd.properties[prop]
+                    # extract attribute property type
             if prop_val == []:
                 prop_val = ''
             prop = om.prop_convert(prop)
@@ -78,7 +92,6 @@ def sbol_to_df(sbol_doc_path, role_dict, org_dict):
         cd_dict[cd_uri] = comp_features
 
     doc_df = pd.DataFrame.from_dict(cd_dict, orient="index")
-
     return doc_df
 
 

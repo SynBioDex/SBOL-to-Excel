@@ -17,9 +17,11 @@ def callTest(cwd):
     """
     sbol_doc_path = os.path.join(
         cwd,
-        'SBOL2Excel',
         'tests',
         'test_files',
-        'test_sbol.xml')
-    output_path = os.path.join(cwd, 'test.xlsx')
+        'Eco1C1G1T1_collection.xml')
+    output_path = os.path.join(cwd, 'cello_out_file.xlsx')
     conv.converter(sbol_doc_path, output_path)
+
+
+callTest(cwd)
