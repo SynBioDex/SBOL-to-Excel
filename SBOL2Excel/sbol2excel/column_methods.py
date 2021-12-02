@@ -1,15 +1,19 @@
+"""Class utilized to process column values."""
 from requests_html import HTMLSession
 import sbol2
-import rdflib
+# import rdflib
 
 
 class col_methods:
-    """A class used to carry out a switch case statement for different\
-       properties in SBOL files
+    """Class used to carry out a switch case statement.
+
+    Done for different properties in SBOL files
     """
 
-    def __init__(self, prop_nm, prop_val, sbol_doc, role_dict, org_dict):
-        """The switch statement to call different methods based on prop_nm
+    # def __init__(self, prop_nm, prop_val, sbol_doc, role_dict, org_dict):
+
+    def __init__(self, prop_nm, prop_val, role_dict, org_dict):
+        """Switch statement to call different methods based on prop_nm.
 
         Args:
             prop_nm (str): the name of the property
@@ -24,12 +28,13 @@ class col_methods:
         # global varibales for dataframe switch statements
         self.prop_nm = prop_nm
         self.prop_val = prop_val
-        self.sbol_doc = sbol_doc
+        # self.sbol_doc = sbol_doc
         self.role_dict = role_dict
         self.org_dict = org_dict
 
-        function_call_dict = {'Role': 'role', 'Types': 'types',
-                              'Sequence': 'sequence',
+        function_call_dict = {'Role': 'rts_processor',
+                              'Types': 'rts_processor',
+                              'Sequence': 'rts_processor',
                               'Source Organism': 'organism',
                               'Target Organism': 'organism'}
         if self.prop_nm in function_call_dict:
@@ -42,31 +47,33 @@ class col_methods:
             getattr(self, 'no_change')()
 
     def no_change(self):
-        """Else case for the switch statement"""
+        """Else case for the switch statement."""
         pass
 
-    def role(self):
-        """Uses prop_val as the key in a dictionary to get the new value.
+    def rts_processor(self):
+        """Utilize prop_val as the key in a dictionary to get the new value.
+
         It is a way of converting an ontology term to a human readable one
         """
-        role_val = str(self.prop_val)
+        # role_val = str(self.prop_val)
+        role_val = self.prop_val
         if role_val in self.role_dict:
             self.prop_val = self.role_dict[role_val]
 
     def types(self):
-        """Split types uri to only be the last bit after the final hash
+        """Split types uri to only be the last bit after the final hash.
 
         Raises:
             ValueError: If self.prop_val does not contain a #
         """
-        self.prop_val = str(self.prop_val)
+        self.prop_val = self.prop_val
         if '#' not in self.prop_val:
             raise ValueError
         else:
             self.prop_val = self.prop_val.split('#')[-1]
 
     def sequence(self):
-        """Gets the sequence from the document based on the sequence uri
+        """Get the sequence from the document based on the sequence uri.
 
         Raises:
             TypeError: If the prop_val from initialisation is not a uri
@@ -74,19 +81,20 @@ class col_methods:
             ValueError: If the prop_val from initialisation is not a uri
                     in the sbol document provided at initialisation
         """
-        if type(self.prop_val) not in [rdflib.term.URIRef, str]:
-            raise TypeError
-        else:
-            try:
-                temp = self.sbol_doc.getSequence(self.prop_val)
-                self.prop_val = temp.elements
-            except sbol2.sbolerror.SBOLError:
-                # if uri not found in document
-                raise ValueError
+        # if type(self.prop_val) not in [rdflib.term.URIRef, str]:
+        #     raise TypeError
+        # else:
+        try:
+            temp = self.sbol_doc.getSequence(self.prop_val)
+            self.prop_val = temp.elements
+        except sbol2.sbolerror.SBOLError:
+            # if uri not found in document
+            raise ValueError
 
     def organism(self):
-        """        Converts a uri containing a txid into a human readable name
-        either by using the ontology provided or by pulling the name from
+        """Convert a uri containing a txid into a human readable name.
+
+        Done either by using the ontology provided or by pulling the name from
         the ncbi database. If the name is pulled from the database it is added
         to the ontology for the rest of the program run (the assumption is
         that a rare organism may be used multiple times)
@@ -97,14 +105,15 @@ class col_methods:
                         'https://identifiers.org/taxonomy:'
             TypeError: if self.org_dict is not a dictionary
         """
-        if type(self.prop_val) not in [rdflib.term.URIRef, str]:
-            raise TypeError
-        elif 'https://identifiers.org/taxonomy:' not in self.prop_val:
+        # if type(self.prop_val) not in [rdflib.term.URIRef, str]:
+        #     raise TypeError
+        if 'https://identifiers.org/taxonomy:' not in self.prop_val:
             raise ValueError
         if type(self.org_dict) is not dict:
             raise TypeError
 
-        txid = str(self.prop_val).split(':')[-1]
+        # txid = str(self.prop_val).split(':')[-1]
+        txid = self.prop_val.split(':')[-1]
 
         if txid in self.org_dict:
             self.prop_val = self.org_dict[txid]

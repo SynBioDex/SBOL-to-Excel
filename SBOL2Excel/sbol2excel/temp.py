@@ -3,7 +3,7 @@ This module serves as a caller to the others.
 
 One the functions are called, your results will be properly output.
 """
-import sbol2excel.helper_functions as hf
+import sbol2excel.converter as conv
 import os
 
 cwd = os.getcwd()
@@ -19,9 +19,10 @@ def callTest(cwd):
         cwd,
         'tests',
         'test_files',
-        'simple_library.nt')
-    output_path = os.path.join(cwd, 'test.xlsx')
-    hf.sbol_validation(sbol_doc_path, output_path)
+        'test_sbol.xml')
+    # enter code for class
+    output_path = os.path.join(cwd, 'out.xlsx')
+    conv.converter(sbol_doc_path, output_path)
 
 
 callTest(cwd)

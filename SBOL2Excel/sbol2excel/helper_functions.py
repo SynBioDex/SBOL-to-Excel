@@ -3,28 +3,7 @@ Presented here are a grouping of helper functions.
 
 These functions assist in the dataframe formatting.
 """
-
-import sbol2excel.converter as conv
-import sbol2excel.sbol3_process as sb3
 import pandas as pd
-
-
-def sbol_validation(sbol_doc_path, output_path):
-    """Validate the file's SBOL version before value extraction."""
-    with open(sbol_doc_path) as sbol_file:
-        lines = sbol_file.read()
-    # add whole uri
-    if 'v2#' in lines:
-        try:
-            conv.converter(sbol_doc_path, output_path)
-        except ValueError:
-            print('Invalid Value')
-    # add whole uri
-    elif 'v3#' in lines:
-        try:
-            sb3.sbol3_converter(sbol_doc_path, output_path)
-        except ValueError:
-            print('Invalid Value')
 
 
 def col_to_num(col_ind):

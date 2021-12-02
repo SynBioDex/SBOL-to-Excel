@@ -85,42 +85,25 @@ def organism_ontology(onto_version):
     return org_dict
 
 
-def prop_convert(prop):
+def prop_convert(df):
     """Take property urls and converts them into more human readable names.
 
     Args:
         prop (str): a url for a property, e.g. http://purl.org/dc/terms/title
                     or http://sbols.org/v2#type
 
-    Raises:
-        ValueError: raised if the prop is not a string
-
     Returns:
         prop: the updated more human readable prop (may be unchanged depending
                 on the original input)
     """
-    if type(prop) is str:
-        idx = prop.find('#')
-
-        if idx >= 1:
-            prop = prop[idx + 1:]
-            prop = prop.title()
-
-        if prop == 'Type':
-            prop = 'Types'
-        if prop == 'Sourceorganism':
-            prop = 'Source Organism'
-        if prop == 'Targetorganism':
-            prop = 'Target Organism'
-        if prop == 'Designnotes':
-            prop = 'Design Notes'
-        if prop == 'http://purl.org/dc/terms/title':
-            prop = 'Part Name'
-        if prop == 'http://purl.org/dc/terms/description':
-            prop = 'Part Description'
-        if prop == 'http://purl.obolibrary.org/obo/OBI_0001617':
-            prop = 'OBI_0001617'
-
-        return prop
-    else:
-        raise ValueError
+    col_names = []
+    columns = df.columns.tolist()
+    for column_name in columns:
+        if '#' in column_name:
+            c = column_name.split('#')[-1]
+            col_names.append(c.title())
+        else:
+            c = column_name.split('/')[-1]
+            col_names.append(c.title())
+    df.columns = col_names
+    return df

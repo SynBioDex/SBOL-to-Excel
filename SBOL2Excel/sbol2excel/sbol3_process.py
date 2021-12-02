@@ -105,7 +105,7 @@ def sbol3_to_df(sbol_doc_path, role_dict, org_dict):
             try:
                 # log issue for this section in SBOL3
                 prop_val = c[prop]
-            except:
+            except ValueError:
                 print(type(c))
                 prop_val = []
             # ********** AJs Test **********

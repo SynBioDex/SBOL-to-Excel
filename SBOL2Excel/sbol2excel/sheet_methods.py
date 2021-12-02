@@ -5,11 +5,11 @@ The dataframe will be prepared to be output in Excel format.
 """
 
 import os
-import sbol2
 import pandas as pd
 from openpyxl import load_workbook
 from openpyxl.worksheet.table import Table, TableStyleInfo
 from openpyxl.utils.dataframe import dataframe_to_rows
+from rdflib import Graph
 import sbol2excel.ontology_methods as om
 import sbol2excel.column_methods as cm
 import sbol2excel.helper_functions as hf
@@ -17,68 +17,30 @@ import logging
 
 
 def sbol_to_df(sbol_doc_path, role_dict, org_dict):
-    """Read in an sbol file and returns a dataframe.
-
-    The dataframe will be output with uri/persistent identity of
-    each component defintion as index and each property being a column
-
-
-    Args:
-        sbol_doc_path (string): full file path to the sbol document to read in
-        role_dict (dictionary): dictionary to convert role uris to human
-                        readable format.
-                        E.g. {'http://identifiers.org/so/SO:0000316': 'CDS'}
-        org_dict (dictionary): dictionary to convert organism ncbi txid
-                        uris to human readable format.
-                        E.g. {'21': 'Phenylobacterium immobile'}
-
-    Raises:
-        ValueError: if the sbol_doc_path does not point to a file
-
-    Returns:
-        pandas dataframe: a dataframe with uri/peristent identity as
-                    index and properties of the sbol component definitions
-                    as columns. If a property doesn't exist for a component
-                    definition then pd.nan is used to fill the gap
-    """
-    # create document object
-    doc = sbol2.Document()
-    doc.read(sbol_doc_path)
-
-    # create a dictionary to hold all the component defintions' information
-    cd_dict = {}
-
-    # iterate through the component definitions
-    for cd in doc.componentDefinitions:
-        # create a dictionary that has a key for the
-        # component definition's identity,
-        # and a value for all of its features
-        comp_features = {}
-        cd_uri = cd.identity
-
-        # iterate through the properties of the component defintions
-        # and set them equal to prop_val variable
-        for prop in cd.properties:
-            try:
-                prop_val = cd.properties[prop][0]
-            except IndexError:
-                prop_val = cd.properties[prop]
-                # extract attribute property type
-            if prop_val == []:
-                prop_val = ''
-            prop = om.prop_convert(prop)
-            prop_val = cm.col_methods(prop, prop_val, doc, role_dict,
-                                      org_dict).prop_val
-            comp_features[prop] = str(prop_val)
-
-        # append each comp_features dictionary as a
-        # value into the component definitions
-        # dictionary with the persistentIdentity/uri serving as the key
-        cd_dict[cd_uri] = comp_features
-
-    doc_df = pd.DataFrame.from_dict(cd_dict, orient="index")
-
-    return doc_df
+    """Utilize RDFLib to collect document contents."""
+    g = Graph()
+    g.parse(sbol_doc_path)
+    subj = {}
+    for index, (subject, predicate, _object) in enumerate(g):
+        # collect subject, predicate, and object triples
+        subject = str(subject)
+        predicate = str(predicate)
+        _object = str(_object)
+        # process the object to make it more human readable
+        _object = cm.col_methods(predicate, _object, role_dict,
+                                    org_dict).prop_val
+        # create dataframe the prepares the triples to be output to excel
+        if subject in subj:
+            if predicate in subj[subject]:
+                subj[subject][predicate].append(_object)
+            else:
+                subj[subject][predicate] = [_object]
+                subj[subject][predicate] = ', '.join(subj[subject][predicate])
+        else:
+            subj[subject] = {predicate: _object}
+    df = pd.DataFrame.from_dict(subj, orient='index')
+    # df = om.prop_convert(df)
+    return df
 
 
 def df_to_excel(df, output_path, output_template):
@@ -113,8 +75,10 @@ def df_to_excel(df, output_path, output_template):
     SBOL2Excel_path = os.path.split(file_dir)[0]
     output_template_path = os.path.join(SBOL2Excel_path, 'sbol2excel',
                                         'Output_Templates', output_template)
+    # ********** TEMPORARY COMMENT OUT **********
     if not os.path.isfile(output_template_path):
         raise ValueError
+    # ********** TEMPORARY COMMENT OUT **********
     wb = load_workbook(output_template_path)
     ws = wb.active
     df_row_obj = dataframe_to_rows(df, index=False, header=True)

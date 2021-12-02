@@ -32,14 +32,15 @@ def converter(sbol_doc_path, output_path):
                  'Displayid',
                  'Version',
                  'Attachment',
-                 'Types',
-                 'OBI_0001617']
+                 'Obi_0001617']
 
     role_dict = om.role_ontology(onto_version)
     org_dict = om.organism_ontology(onto_version)
 
     # read in sbol data
     df = sm.sbol_to_df(sbol_doc_path, role_dict, org_dict)
+
+    # # ********** TEMPORARY COMMENT OUT **********
 
     # reorder columns based on list above
     df = hf.reorder_col(df, col_list)
@@ -51,3 +52,5 @@ def converter(sbol_doc_path, output_path):
     # output to excel
     sm.df_to_excel(df, output_path, output_template)
     return
+
+    # # ********** TEMPORARY COMMENT OUT **********
