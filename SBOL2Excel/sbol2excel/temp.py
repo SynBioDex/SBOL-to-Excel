@@ -19,7 +19,7 @@ def callTest(cwd):
         cwd,
         'tests',
         'test_files',
-        'test_sbol.xml')
+        'cello_library.xml')
     # enter code for class
     output_path = os.path.join(cwd, 'out.xlsx')
     conv.converter(sbol_doc_path, output_path)

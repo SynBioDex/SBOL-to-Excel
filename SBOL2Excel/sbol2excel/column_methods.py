@@ -1,7 +1,6 @@
 """Class utilized to process column values."""
 from requests_html import HTMLSession
 import sbol2
-# import rdflib
 
 
 class col_methods:
@@ -9,8 +8,6 @@ class col_methods:
 
     Done for different properties in SBOL files
     """
-
-    # def __init__(self, prop_nm, prop_val, sbol_doc, role_dict, org_dict):
 
     def __init__(self, prop_nm, prop_val, role_dict, org_dict):
         """Switch statement to call different methods based on prop_nm.
@@ -32,11 +29,12 @@ class col_methods:
         self.role_dict = role_dict
         self.org_dict = org_dict
 
-        function_call_dict = {'Role': 'rts_processor',
-                              'Types': 'rts_processor',
-                              'Sequence': 'rts_processor',
-                              'Source Organism': 'organism',
-                              'Target Organism': 'organism'}
+        function_call_dict = {'sbol:role': 'role',
+                              'sbol:encoding': 'sequence',
+                              'rdf:type': 'types',
+                              'sbol:type': 'types',
+                              'ns1:sourceOrganism': 'organism',
+                              'ns1:targetOrganism': 'organism'}
         if self.prop_nm in function_call_dict:
             self.prop_nm = function_call_dict[self.prop_nm]
         # if the column name matches the function name, call the function
@@ -50,7 +48,7 @@ class col_methods:
         """Else case for the switch statement."""
         pass
 
-    def rts_processor(self):
+    def role(self):
         """Utilize prop_val as the key in a dictionary to get the new value.
 
         It is a way of converting an ontology term to a human readable one
@@ -68,7 +66,7 @@ class col_methods:
         """
         self.prop_val = self.prop_val
         if '#' not in self.prop_val:
-            raise ValueError
+            pass
         else:
             self.prop_val = self.prop_val.split('#')[-1]
 
@@ -81,9 +79,6 @@ class col_methods:
             ValueError: If the prop_val from initialisation is not a uri
                     in the sbol document provided at initialisation
         """
-        # if type(self.prop_val) not in [rdflib.term.URIRef, str]:
-        #     raise TypeError
-        # else:
         try:
             temp = self.sbol_doc.getSequence(self.prop_val)
             self.prop_val = temp.elements
@@ -105,8 +100,6 @@ class col_methods:
                         'https://identifiers.org/taxonomy:'
             TypeError: if self.org_dict is not a dictionary
         """
-        # if type(self.prop_val) not in [rdflib.term.URIRef, str]:
-        #     raise TypeError
         if 'https://identifiers.org/taxonomy:' not in self.prop_val:
             raise ValueError
         if type(self.org_dict) is not dict:

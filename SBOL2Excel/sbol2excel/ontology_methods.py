@@ -1,4 +1,6 @@
 """This module handles the fetching of ontology terms."""
+# from typing import Counter
+import sbol2excel.helper_functions as hf
 import pandas as pd
 import os
 
@@ -85,7 +87,7 @@ def organism_ontology(onto_version):
     return org_dict
 
 
-def prop_convert(df):
+def prop_convert(predicate):
     """Take property urls and converts them into more human readable names.
 
     Args:
@@ -96,14 +98,21 @@ def prop_convert(df):
         prop: the updated more human readable prop (may be unchanged depending
                 on the original input)
     """
-    col_names = []
-    columns = df.columns.tolist()
-    for column_name in columns:
-        if '#' in column_name:
-            c = column_name.split('#')[-1]
-            col_names.append(c.title())
-        else:
-            c = column_name.split('/')[-1]
-            col_names.append(c.title())
-    df.columns = col_names
-    return df
+    col_names = {
+        'http://sbols.org/v2': 'sbol',
+        'http://www.w3.org/1999/02/22-rdf-syntax-ns': 'rdf',
+        'http://www.w3.org/2000/01/rdf-schema': 'rdfs',
+        'http://wiki.synbiohub.org/wiki/Terms/synbiohub': 'sbh',
+        'OBI_0001617': 'obo'
+    }
+    ns_counter = 0
+
+    col_vals = hf.get_col_name(predicate)
+    if col_vals[0] in col_names:
+        ns_counter += 1
+        return col_names[col_vals[0]] + ':' + col_vals[-1]
+    else:
+        ns_counter += 1
+        # col_names[col_vals[0]] = 'ns' + str(ns_counter)
+        col_names[col_vals[0]] = 'ns' + str(ns_counter)
+        return col_names[col_vals[0]] + ':' + col_vals[-1]

@@ -24,7 +24,9 @@ def sbol_to_df(sbol_doc_path, role_dict, org_dict):
     for index, (subject, predicate, _object) in enumerate(g):
         # collect subject, predicate, and object triples
         subject = str(subject)
+        # subject = om.prop_convert(subject)
         predicate = str(predicate)
+        predicate = str(om.prop_convert(str(predicate)))
         _object = str(_object)
         # process the object to make it more human readable
         _object = cm.col_methods(predicate, _object, role_dict,
@@ -32,10 +34,9 @@ def sbol_to_df(sbol_doc_path, role_dict, org_dict):
         # create dataframe the prepares the triples to be output to excel
         if subject in subj:
             if predicate in subj[subject]:
-                subj[subject][predicate].append(_object)
+                subj[subject][predicate] = subj[subject][predicate] + _object + " "
             else:
-                subj[subject][predicate] = [_object]
-                subj[subject][predicate] = ', '.join(subj[subject][predicate])
+                subj[subject][predicate] = _object
         else:
             subj[subject] = {predicate: _object}
     df = pd.DataFrame.from_dict(subj, orient='index')

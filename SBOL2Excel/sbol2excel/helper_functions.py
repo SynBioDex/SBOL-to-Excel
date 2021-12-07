@@ -6,6 +6,16 @@ These functions assist in the dataframe formatting.
 import pandas as pd
 
 
+def get_col_name(predicate):
+    """Split predicate to access values for column name."""
+    if '#' in predicate:
+        predicate = predicate.split('#')
+        return predicate
+    else:
+        predicate = predicate.split('/')
+        return predicate
+
+
 def col_to_num(col_ind):
     """Generate Excel Column Name String based on an intger input.
 
