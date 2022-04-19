@@ -4,15 +4,24 @@ Presented here are a grouping of helper functions.
 These functions assist in the dataframe formatting.
 """
 import pandas as pd
+import sbol2excel.column_methods as cm
+
+
+def process_subject(df):
+    """Process column values."""
+    subjects = list(df.keys())
+    new_df = pd.DataFrame.from_dict(df, orient='index')
+    new_df.insert(loc=0, column='IDs', value=subjects)
+    return new_df
 
 
 def get_col_name(predicate):
     """Split predicate to access values for column name."""
     if '#' in predicate:
-        predicate = predicate.split('#')
+        predicate = predicate.rsplit('#', 1)
         return predicate
     else:
-        predicate = predicate.split('/')
+        predicate = predicate.rsplit('/', 1)
         return predicate
 
 

@@ -87,7 +87,7 @@ def organism_ontology(onto_version):
     return org_dict
 
 
-def prop_convert(predicate):
+def prop_convert(predicates):
     """Take property urls and converts them into more human readable names.
 
     Args:
@@ -98,21 +98,31 @@ def prop_convert(predicate):
         prop: the updated more human readable prop (may be unchanged depending
                 on the original input)
     """
-    col_names = {
+    url_dict = {
+        'IDs': '',
         'http://sbols.org/v2': 'sbol',
         'http://www.w3.org/1999/02/22-rdf-syntax-ns': 'rdf',
         'http://www.w3.org/2000/01/rdf-schema': 'rdfs',
         'http://wiki.synbiohub.org/wiki/Terms/synbiohub': 'sbh',
-        'OBI_0001617': 'obo'
+        'http://cellocad.org/Terms/cello': 'cello',
+        'http://purl.obolibrary.org/obo': 'obo',
+        'http://purl.org/dc/elements/1.1': 'dc',
+        "http://purl.org/dc/terms": 'dcterms',
+        "http://www.w3.org/ns/prov": 'prov',
+        "http://www.ontology-of-units-of-measure.org/resource/om-2": 'om'
     }
-    ns_counter = 0
-
-    col_vals = hf.get_col_name(predicate)
-    if col_vals[0] in col_names:
-        ns_counter += 1
-        return col_names[col_vals[0]] + ':' + col_vals[-1]
-    else:
-        ns_counter += 1
-        # col_names[col_vals[0]] = 'ns' + str(ns_counter)
-        col_names[col_vals[0]] = 'ns' + str(ns_counter)
-        return col_names[col_vals[0]] + ':' + col_vals[-1]
+    ns_num = 0
+    nl = []
+    for col_name in predicates:
+        col_vals = hf.get_col_name(col_name)
+        if col_name in url_dict:
+            if col_name == 'IDs':
+                nl.append(col_vals[-1])
+            # nl.append(url_dict[col_name] + ':' + col_vals[-1])
+        elif col_vals[0] in url_dict and col_vals[0] != 'IDs':
+            nl.append(url_dict[col_vals[0]] + ':' + col_vals[-1])
+        else:
+            url_dict[col_vals[0]] = 'ns' + str(ns_num)
+            nl.append('ns' + str(ns_num) + ':' + col_vals[-1])
+            ns_num += 1
+    return nl, url_dict

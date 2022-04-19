@@ -1,2 +1,1 @@
-
-    Run this function to test the converter.
+import sbol2excel.sheet_methods as sm
