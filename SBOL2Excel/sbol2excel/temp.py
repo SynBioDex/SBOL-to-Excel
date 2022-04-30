@@ -15,13 +15,15 @@ def callTest(cwd):
     """
     sbol_doc_path = os.path.join(
         cwd,
+        'sbol2excel',
         'tests',
         'test_files',
-        'cello_library.xml')
+        'rep_parts.xml')
     # enter code for class
-    output_path = os.path.join(cwd, 'out_put.xlsx')
+    output_path = os.path.join(cwd, 'sbol2excel', 'tests', 'test_files', 'seed_out.xlsx')
     conv.converter(sbol_doc_path, output_path)
 
 
 cwd = os.getcwd()
+print(cwd)
 callTest(cwd)
