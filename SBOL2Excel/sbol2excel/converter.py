@@ -32,22 +32,29 @@ def converter(sbol_doc_path, output_path):
                  'Displayid',
                  'Version',
                  'Attachment',
-                 'Types',
-                 'OBI_0001617']
+                 'Obi_0001617']
 
     role_dict = om.role_ontology(onto_version)
     org_dict = om.organism_ontology(onto_version)
 
     # read in sbol data
-    df = sm.sbol_to_df(sbol_doc_path, role_dict, org_dict)
+    data_dict = sm.sbol_to_df(sbol_doc_path, role_dict, org_dict)
 
-    # reorder columns based on list above
+    df = hf.process_subject(data_dict)
+
+    # get processed columns
+    df.columns, predicate_list = om.prop_convert(df.columns)
+
+    # print(predicate_list)
+
     df = hf.reorder_col(df, col_list)
 
     # drop columns in the drop list
+
     drop_list_intersect = [elem for elem in drop_list if elem in df.columns]
     df = df.drop(columns=drop_list_intersect)
 
     # output to excel
-    sm.df_to_excel(df, output_path, output_template)
+
+    sm.df_to_excel(df, output_path, output_template, role_dict, org_dict)
     return

@@ -1,4 +1,6 @@
 """This module handles the fetching of ontology terms."""
+# from typing import Counter
+import sbol2excel.helper_functions as hf
 import pandas as pd
 import os
 
@@ -85,42 +87,42 @@ def organism_ontology(onto_version):
     return org_dict
 
 
-def prop_convert(prop):
+def prop_convert(predicates):
     """Take property urls and converts them into more human readable names.
 
     Args:
         prop (str): a url for a property, e.g. http://purl.org/dc/terms/title
                     or http://sbols.org/v2#type
 
-    Raises:
-        ValueError: raised if the prop is not a string
-
     Returns:
         prop: the updated more human readable prop (may be unchanged depending
                 on the original input)
     """
-    if type(prop) is str:
-        idx = prop.find('#')
-
-        if idx >= 1:
-            prop = prop[idx + 1:]
-            prop = prop.title()
-
-        if prop == 'Type':
-            prop = 'Types'
-        if prop == 'Sourceorganism':
-            prop = 'Source Organism'
-        if prop == 'Targetorganism':
-            prop = 'Target Organism'
-        if prop == 'Designnotes':
-            prop = 'Design Notes'
-        if prop == 'http://purl.org/dc/terms/title':
-            prop = 'Part Name'
-        if prop == 'http://purl.org/dc/terms/description':
-            prop = 'Part Description'
-        if prop == 'http://purl.obolibrary.org/obo/OBI_0001617':
-            prop = 'OBI_0001617'
-
-        return prop
-    else:
-        raise ValueError
+    url_dict = {
+        'IDs': '',
+        'http://sbols.org/v2': 'sbol',
+        'http://www.w3.org/1999/02/22-rdf-syntax-ns': 'rdf',
+        'http://www.w3.org/2000/01/rdf-schema': 'rdfs',
+        'http://wiki.synbiohub.org/wiki/Terms/synbiohub': 'sbh',
+        'http://cellocad.org/Terms/cello': 'cello',
+        'http://purl.obolibrary.org/obo': 'obo',
+        'http://purl.org/dc/elements/1.1': 'dc',
+        "http://purl.org/dc/terms": 'dcterms',
+        "http://www.w3.org/ns/prov": 'prov',
+        "http://www.ontology-of-units-of-measure.org/resource/om-2": 'om'
+    }
+    ns_num = 0
+    nl = []
+    for col_name in predicates:
+        col_vals = hf.get_col_name(col_name)
+        if col_name in url_dict:
+            if col_name == 'IDs':
+                nl.append(col_vals[-1])
+            # nl.append(url_dict[col_name] + ':' + col_vals[-1])
+        elif col_vals[0] in url_dict and col_vals[0] != 'IDs':
+            nl.append(url_dict[col_vals[0]] + ':' + col_vals[-1])
+        else:
+            url_dict[col_vals[0]] = 'ns' + str(ns_num)
+            nl.append('ns' + str(ns_num) + ':' + col_vals[-1])
+            ns_num += 1
+    return nl, url_dict

@@ -6,8 +6,6 @@ One the functions are called, your results will be properly output.
 import sbol2excel.converter as conv
 import os
 
-cwd = os.getcwd()
-
 
 def callTest(cwd):
     """
@@ -17,9 +15,13 @@ def callTest(cwd):
     """
     sbol_doc_path = os.path.join(
         cwd,
-        'SBOL2Excel',
         'tests',
         'test_files',
-        'test_sbol.xml')
-    output_path = os.path.join(cwd, 'test.xlsx')
+        'cello_library.xml')
+    # enter code for class
+    output_path = os.path.join(cwd, 'out_put.xlsx')
     conv.converter(sbol_doc_path, output_path)
+
+
+cwd = os.getcwd()
+callTest(cwd)
