@@ -1,18 +1,12 @@
-"""This module features the formatting of the dataframe.
-
-The dataframe will be prepared to be output in Excel format.
-
-"""
-
 import os
 import pandas as pd
 from openpyxl import load_workbook
 from openpyxl.worksheet.table import Table, TableStyleInfo
 from openpyxl.utils.dataframe import dataframe_to_rows
 from rdflib import Graph
+import logging
 import sbol2excel.helper_functions as hf
 import sbol2excel.column_methods as cm
-import logging
 
 
 def process_col_val(ws, start_row, len_col, role_dict, org_dict):

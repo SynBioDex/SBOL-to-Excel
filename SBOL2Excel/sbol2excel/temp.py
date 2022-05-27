@@ -7,7 +7,7 @@ import sbol2excel.converter as conv
 import os
 
 
-def callTest(cwd):
+def callTest(file_name_in, file_name_out):
     """
     Run this function to test the converter.
 
