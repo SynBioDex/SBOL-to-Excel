@@ -11,7 +11,7 @@ def process_subject(df):
     """Process column values."""
     subjects = list(df.keys())
     new_df = pd.DataFrame.from_dict(df, orient='index')
-    new_df.insert(loc=0, column='IDs', value=subjects)
+    new_df.insert(loc=0, column='IDs', value=subjects) # why is this done?
     return new_df
 
 

@@ -109,7 +109,8 @@ def prop_convert(predicates):
         'http://purl.org/dc/elements/1.1': 'dc',
         "http://purl.org/dc/terms": 'dcterms',
         "http://www.w3.org/ns/prov": 'prov',
-        "http://www.ontology-of-units-of-measure.org/resource/om-2": 'om'
+        "http://www.ontology-of-units-of-measure.org/resource/om-2": 'om',
+        'http://sbols.org/v3': 'sbol'
     }
     ns_num = 0
     nl = []

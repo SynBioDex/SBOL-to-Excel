@@ -21,7 +21,7 @@ def process_col_val(ws, start_row, len_col, role_dict, org_dict):
                                 org_dict).prop_val
 
 
-def sbol_to_df(sbol_doc_path, role_dict, org_dict):
+def sbol_to_df(sbol_doc_path):
     """Utilize RDFLib to collect document contents."""
     g = Graph()
     sbol_doc_path = str(sbol_doc_path)

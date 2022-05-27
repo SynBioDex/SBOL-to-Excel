@@ -1,13 +1,13 @@
 """Class utilized to process column values."""
-from multiprocessing.sharedctypes import Value
-from tkinter.tix import Tree
-from requests_html import HTMLSession
+# from multiprocessing.sharedctypes import Value
+# from tkinter.tix import Tree
+# from requests_html import HTMLSession
 # import sbol2
-import pandas as pd
-from openpyxl import load_workbook
-from openpyxl.worksheet.table import Table, TableStyleInfo
-from datetime import datetime
-from openpyxl.styles import NamedStyle
+# import pandas as pd
+# from openpyxl import load_workbook
+# from openpyxl.worksheet.table import Table, TableStyleInfo
+# from datetime import datetime
+# from openpyxl.styles import NamedStyle
 import validators
 
 

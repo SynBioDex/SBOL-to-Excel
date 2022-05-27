@@ -38,7 +38,7 @@ def converter(sbol_doc_path, output_path):
     org_dict = om.organism_ontology(onto_version)
 
     # read in sbol data
-    data_dict = sm.sbol_to_df(sbol_doc_path, role_dict, org_dict)
+    data_dict = sm.sbol_to_df(sbol_doc_path)
 
     df = hf.process_subject(data_dict)
 
