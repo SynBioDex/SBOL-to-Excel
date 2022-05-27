@@ -15,7 +15,7 @@
   </rdf:Description>
   <rdf:Description rdf:about="http://examples.org/pAOX6">
     <sbol:displayId>pAOX6</sbol:displayId>
-    <sbol:description>Promoter variant 6 for peroxisomal N(1)-acetyl-spermine/spermidine oxidase enzyme</sbol:description>
+    <sbol:description>Promoter variant 6 for peroxisomal N(1)-acetyl-spermine/spermidine oxidase enzyme</sbol:description>
     <rdf:type rdf:resource="http://sbols.org/v3#Component"/>
     <sbol:hasNamespace rdf:resource="http://examples.org/"/>
     <sbol:type rdf:resource="https://identifiers.org/SBO:0000251"/>
@@ -62,7 +62,7 @@
   </rdf:Description>
   <rdf:Description rdf:about="http://examples.org/pAOX5">
     <sbol:displayId>pAOX5</sbol:displayId>
-    <sbol:description>Promoter variant 5 for peroxisomal N(1)-acetyl-spermine/spermidine oxidase enzyme</sbol:description>
+    <sbol:description>Promoter variant 5 for peroxisomal N(1)-acetyl-spermine/spermidine oxidase enzyme</sbol:description>
     <rdf:type rdf:resource="http://sbols.org/v3#Component"/>
     <sbol:hasNamespace rdf:resource="http://examples.org/"/>
     <sbol:type rdf:resource="https://identifiers.org/SBO:0000251"/>
@@ -74,7 +74,7 @@
   </rdf:Description>
   <rdf:Description rdf:about="http://examples.org/pAOX3">
     <sbol:displayId>pAOX3</sbol:displayId>
-    <sbol:description>Promoter variant 3 for peroxisomal N(1)-acetyl-spermine/spermidine oxidase enzyme</sbol:description>
+    <sbol:description>Promoter variant 3 for peroxisomal N(1)-acetyl-spermine/spermidine oxidase enzyme</sbol:description>
     <rdf:type rdf:resource="http://sbols.org/v3#Component"/>
     <sbol:hasNamespace rdf:resource="http://examples.org/"/>
     <sbol:type rdf:resource="https://identifiers.org/SBO:0000251"/>
@@ -103,7 +103,7 @@
   </rdf:Description>
   <rdf:Description rdf:about="http://examples.org/pAOX1">
     <sbol:displayId>pAOX1</sbol:displayId>
-    <sbol:description>Promoter variant 1 for peroxisomal N(1)-acetyl-spermine/spermidine oxidase enzyme</sbol:description>
+    <sbol:description>Promoter variant 1 for peroxisomal N(1)-acetyl-spermine/spermidine oxidase enzyme</sbol:description>
     <rdf:type rdf:resource="http://sbols.org/v3#Component"/>
     <sbol:hasNamespace rdf:resource="http://examples.org/"/>
     <sbol:type rdf:resource="https://identifiers.org/SBO:0000251"/>
@@ -121,7 +121,7 @@
   </rdf:Description>
   <rdf:Description rdf:about="http://examples.org/pAOX2">
     <sbol:displayId>pAOX2</sbol:displayId>
-    <sbol:description>Promoter variant 2 for peroxisomal N(1)-acetyl-spermine/spermidine oxidase enzyme</sbol:description>
+    <sbol:description>Promoter variant 2 for peroxisomal N(1)-acetyl-spermine/spermidine oxidase enzyme</sbol:description>
     <rdf:type rdf:resource="http://sbols.org/v3#Component"/>
     <sbol:hasNamespace rdf:resource="http://examples.org/"/>
     <sbol:type rdf:resource="https://identifiers.org/SBO:0000251"/>
@@ -133,7 +133,7 @@
   </rdf:Description>
   <rdf:Description rdf:about="http://examples.org/pAOX4">
     <sbol:displayId>pAOX4</sbol:displayId>
-    <sbol:description>Promoter variant 4 for peroxisomal N(1)-acetyl-spermine/spermidine oxidase enzyme</sbol:description>
+    <sbol:description>Promoter variant 4 for peroxisomal N(1)-acetyl-spermine/spermidine oxidase enzyme</sbol:description>
     <rdf:type rdf:resource="http://sbols.org/v3#Component"/>
     <sbol:hasNamespace rdf:resource="http://examples.org/"/>
     <sbol:type rdf:resource="https://identifiers.org/SBO:0000251"/>
